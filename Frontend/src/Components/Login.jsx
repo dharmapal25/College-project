@@ -26,7 +26,7 @@ const Login = () => {
         e.preventDefault();
         console.log('Login submitted:', formData);
 
-        axios.post('http://localhost:3000/auth/login', formData, {
+        axios.post('https://college-pro.onrender.com/auth/login', formData, {
             headers: {
                 'Content-Type': 'application/json'
             }
