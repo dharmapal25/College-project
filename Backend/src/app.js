@@ -28,9 +28,5 @@ app.get("/", (req, res) => {
 app.use("/auth", authRouters);
 app.use("/enquiry", enquiryRouter);
 
-app.use("*", (req, res) => {
-    // res.sendFile(__dirname, "./public/index.html");
-    res.status(404).sendFile(path.join(__dirname, "./public/index.html"));
-});
 
 module.exports = app
