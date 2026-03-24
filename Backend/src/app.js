@@ -25,14 +25,12 @@ app.get("/", (req, res) => {
     });
 });
 
-// Routes
 app.use("/auth", authRouters);
 app.use("/enquiry", enquiryRouter);
 
-// 404 handler
 app.use("*", (req, res) => {
-    // res.status(404).json({ message: "Route not found" });
-    res.sendFile(__dirname, "./public/index.html");
+    // res.sendFile(__dirname, "./public/index.html");
+    res.status(404).sendFile(path.join(__dirname, "./public/index.html"));
 });
 
 module.exports = app
