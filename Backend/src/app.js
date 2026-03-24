@@ -14,10 +14,23 @@ app.use(cors({
 
 app.use(express.json());
 app.use(cookieParser());
-// app.use("/auth", require("./Routers/auth.router")); // Direct pass
+
+// Health check endpoint
+app.get("/", (req, res) => {
+    res.status(200).json({ 
+        message: "College Pro API is running", 
+        timestamp: new Date().toISOString(),
+        status: "online"
+    });
+});
+
+// Routes
 app.use("/auth", authRouters);
-app.use("/enquiry",enquiryRouter);
+app.use("/enquiry", enquiryRouter);
 
-
+// 404 handler
+app.use("*", (req, res) => {
+    res.status(404).json({ message: "Route not found" });
+});
 
 module.exports = app
