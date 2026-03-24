@@ -51,12 +51,14 @@ const login = async (req, res) => {
          process.env.JWT_SECRET,
          {expiresIn: "1d"});
 
-         res.cookie("token", token, {
-            httpOnly: true,
-            sameSite: "lax",
-            secure: false,
-            maxAge: 24 * 60 * 60 * 1000
-         });
+    const isProduction = process.env.NODE_ENV === "production";
+    
+    res.cookie("token", token, {
+        httpOnly: true,
+        sameSite: isProduction ? "none" : "lax",
+        secure: isProduction ? true : false,
+        maxAge: 24 * 60 * 60 * 1000
+    });
 
     res.status(200).json({message: "Login successful", token});
 };
