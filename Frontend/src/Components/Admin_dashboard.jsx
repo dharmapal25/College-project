@@ -51,12 +51,16 @@ const Admin_dashboard = () => {
     }
   };
 
-  axios.get('https://college-pro.onrender.com/enquiries/logs').then((response) => {
-    setEnquiries(response.data.logs);
-    console.log(response.data.logs);
-  }).catch((error) => {
-    console.error('Error fetching enquiries:', error);
-  });
+  useEffect(() => {
+    axios.get('https://college-pro.on.render.com/enquiries/logs')
+      .then(response => {
+        setEnquiries(response.data.logs);
+        console.log(response.data.logs);
+      })
+      .catch(error => {
+        console.error('Error fetching enquiries:', error);
+      });
+  }, []);
 
 
 
