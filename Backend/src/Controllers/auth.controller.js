@@ -2,6 +2,7 @@ const express = require("express");
 const usersInfo = require("../models/users.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const AllOfficers = require("../models/allOfficers.model");
 
 // Register User
 const register = async (req, res) => {
@@ -198,7 +199,7 @@ const officerLogin = async (req, res) => {
         }
 
         // Officer find karo
-        const officer = await allOfficers.findOne({ email });
+        const officer = await AllOfficers.findOne({ email });
         if (!officer) {
             return res.status(401).json({
                 success: false,
