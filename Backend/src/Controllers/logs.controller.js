@@ -25,6 +25,28 @@ const getUserLogs = async (req, res) => {
     res.status(500).json({ message: error.message || "Failed to fetch logs" });
   }
 };
+const getUserAllLogs = async (req, res) => {
+  try {
+    const userEmail = req.user.email;
+
+    const logs = await userProblems.find().sort({ createdAt: -1 });
+
+    const formattedLogs = logs.map((item) => ({
+      id: item._id,
+      email: item.email,
+      category: item.status || 'pending',
+      location: item.location,
+      description: item.description,
+      Emergency: item.Emergency,
+      status: item.status || 'pending',
+      createdAt: item.createdAt,
+    }));
+
+    res.status(200).json({ logs: formattedLogs });
+  } catch (error) {
+    res.status(500).json({ message: error.message || "Failed to fetch logs" });
+  }
+};
 
 
 const deleteLog = async (req, res) => {
@@ -47,4 +69,4 @@ const deleteLog = async (req, res) => {
   }
 };
 
-module.exports = { getUserLogs, deleteLog };
+module.exports = { getUserLogs, deleteLog, getUserAllLogs };
