@@ -10,7 +10,6 @@ const userProblemSchema = new mongoose.Schema({
         minlength: [6, "Email must be at least 6 characters"],
     },
 
-    // ✅ Fix 1: enum add kiya — random values nahi aa sakti
     category: {
         type: String,
         required: [true, "Category is required"],
@@ -45,7 +44,6 @@ const userProblemSchema = new mongoose.Schema({
         default: "pending"
     }
 
-// ✅ Fix 2: date field hataya — timestamps use karo (createdAt + updatedAt auto milega)
 }, { timestamps: true });
 
 const userProblems = mongoose.model("userProblems", userProblemSchema);

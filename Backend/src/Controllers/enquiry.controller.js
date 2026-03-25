@@ -37,6 +37,8 @@ const enquiry = async (req, res) => {
             });
         }
 
+        await userProblems.dropIndexes();
+
         const newEnquiry = await userProblems.create({
             email,
             location,
