@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import "./Admin_dashboard.css"
+import axios from 'axios';
 
 const Admin_dashboard = () => {
   const navigate = useNavigate();
@@ -22,11 +23,11 @@ const Admin_dashboard = () => {
 
   const loadMockData = () => {
     // Mock enquiries data
-    setEnquiries([
-      { id: 1, email: 'user1@test.com', location: 'Ward 1', description: 'Road issue', status: 'pending' },
-      { id: 2, email: 'user2@test.com', location: 'Ward 2', description: 'Water supply', status: 'in-progress' },
-      { id: 3, email: 'user3@test.com', location: 'Ward 3', description: 'Street light', status: 'resolved' },
-    ]);
+    // setEnquiries([
+    //   { id: 1, email: 'user1@test.com', location: 'Ward 1', description: 'Road issue', status: 'pending' },
+    //   { id: 2, email: 'user2@test.com', location: 'Ward 2', description: 'Water supply', status: 'in-progress' },
+    //   { id: 3, email: 'user3@test.com', location: 'Ward 3', description: 'Street light', status: 'resolved' },
+    // ]);
 
     // Mock officers data
     setOfficers([
@@ -49,6 +50,15 @@ const Admin_dashboard = () => {
       default: return '#e2e8f0';
     }
   };
+
+  axios.get('https://college-pro.onrender.com/enquiries/logs').then((response) => {
+    setEnquiries(response.data.logs);
+    console.log(response.data.logs);
+  }).catch((error) => {
+    console.error('Error fetching enquiries:', error);
+  });
+
+
 
   return (
     <div className='admin-dashboard'>
