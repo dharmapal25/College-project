@@ -42,7 +42,7 @@ const Officers = () => {
     <div className="officers-page">
       <div className="officers-header">
         <h1>Officers</h1>
-        <button onClick={ officersLogin } >Login Officers</button>
+        <button onClick={ officersLogin } className="officers-login-button" >Login Officers</button>
       </div>
 
       {loading && <p className="officers-loading">Loading officers...</p>}

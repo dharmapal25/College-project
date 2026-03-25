@@ -7,11 +7,26 @@
 
 .officers-header {
   display: flex;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
   margin-bottom: 1rem;
+  flex-direction: row;
+
+}
+
+.officers-login-button {
+  border: 1px solid #667eea;
+  cursor: pointer;
+  color: #667eea;
+  padding: 0.6rem 1.2rem;
+  border-radius: 0.5rem;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  background: #d8d8d8;
+  border-radius: 10px;
+  width: 20%;
 }
 
 .officers-container {

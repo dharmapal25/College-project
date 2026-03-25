@@ -36,7 +36,12 @@ const Officers_login = () => {
             .then(response => {
                 console.log('Admin Login successful:', response.data);
                 localStorage.setItem('adminToken', response.data.adminToken);
-                navigate('/admin-dashboard');
+                
+                if(officer.email === "admin") {
+                    navigate('/admin-dashboard');
+                }else {
+                    navigate('/officers-dashboard');
+                }
             })
             .catch(error => {
                 console.error("Login Error:", error.response?.data || error.message);

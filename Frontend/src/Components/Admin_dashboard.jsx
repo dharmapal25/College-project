@@ -158,10 +158,10 @@ const Admin_dashboard = () => {
               All Officers
             </button>
 
-          {/* Add Officer form */}
+            {/* Add Officer form */}
             <button
-            className={`admin-menu-item ${activeTab === 'add-officer' ? 'active' : ''}`}
-            onClick={() => setActiveTab('add-officer')}
+              className={`admin-menu-item ${activeTab === 'add-officer' ? 'active' : ''}`}
+              onClick={() => setActiveTab('add-officer')}
             >
               Add Officer
             </button>
@@ -216,7 +216,7 @@ const Admin_dashboard = () => {
                           <td>{e.location}</td>
                           <td>{e.description}</td>
                           <td>
-                            <span 
+                            <span
                               className='admin-status-badge'
                               style={{ backgroundColor: getStatusColor(e.status) }}
                             >
