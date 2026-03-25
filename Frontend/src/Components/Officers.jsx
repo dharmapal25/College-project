@@ -9,6 +9,8 @@ const Officers = () => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
+  const Navigate = useNavigate()
+
   const fetchOfficers = async () => {
     setLoading(true)
     setError('')
@@ -28,7 +30,7 @@ const Officers = () => {
   }, [])
 
   const officersLogin = () => {
-    useNavigate('/officers-login');
+    Navigate('/officers-login');
   }
 
   return (
@@ -40,7 +42,7 @@ const Officers = () => {
     <div className="officers-page">
       <div className="officers-header">
         <h1>Officers</h1>
-        <h1 onClick={ officersLogin } >Login Officers</h1>
+        <button onClick={ officersLogin } >Login Officers</button>
       </div>
 
       {loading && <p className="officers-loading">Loading officers...</p>}

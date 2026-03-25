@@ -198,7 +198,7 @@ const officerLogin = async (req, res) => {
         }
 
         // Officer find karo
-        const officer = await AllOfficers.findOne({ email });
+        const officer = await allOfficers.findOne({ email });
         if (!officer) {
             return res.status(401).json({
                 success: false,
