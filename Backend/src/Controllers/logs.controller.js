@@ -29,7 +29,9 @@ const getUserAllLogs = async (req, res) => {
   try {
     const userEmail = req.user.email;
 
-    const logs = await userProblems.find().sort({ createdAt: -1 });
+    const logs = await userProblems.find({ email: userEmail })  // ✅ filter by user
+      .select("email location description Emergency status createdAt")
+      .sort({ createdAt: -1 }).limit(20);  // ✅ 20 records
 
     const formattedLogs = logs.map((item) => ({
       id: item._id,
@@ -47,7 +49,6 @@ const getUserAllLogs = async (req, res) => {
     res.status(500).json({ message: error.message || "Failed to fetch logs" });
   }
 };
-
 
 const deleteLog = async (req, res) => {
   try {

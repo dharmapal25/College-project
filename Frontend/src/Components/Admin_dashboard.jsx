@@ -52,7 +52,7 @@ const Admin_dashboard = () => {
   };
 
   useEffect(() => {
-    axios.get('https://college-pro.onrender.com/enquiries/logs-all', { withCredentials: true })
+    axios.get('https://college-pro.onrender.com/enquiries/log-all', { withCredentials: true })
       .then(response => {
         setEnquiries(response.data.logs);
         console.log(response.data.logs);
@@ -93,6 +93,15 @@ const Admin_dashboard = () => {
             >
               All Officers
             </button>
+
+{/* Add Officer form */}
+            <button
+            className={`admin-menu-item ${activeTab === 'add-officer' ? 'active' : ''}`}
+            onClick={() => setActiveTab('add-officer')}
+            >
+              Add Officer
+            </button>
+
           </div>
         </aside>
 
