@@ -121,7 +121,7 @@ const login = async (req, res) => {
     }
 };
 
-// Admin/Officer Login
+// Admin Login
 const adminLogin = async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -184,6 +184,80 @@ const adminLogin = async (req, res) => {
     }
 };
 
+// /Officer Login
+const officerLogin = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        // Validation
+        if (!email || !password) {
+            return res.status(400).json({
+                success: false,
+                message: "Email and password are required"
+            });
+        }
+
+        // Officer find karo
+        const officer = await AllOfficers.findOne({ email });
+        if (!officer) {
+            return res.status(401).json({
+                success: false,
+                message: "Invalid credentials"
+            });
+        }
+
+        // Password compare karo
+        const isMatch = await bcrypt.compare(password, officer.password);
+        if (!isMatch) {
+            return res.status(401).json({
+                success: false,
+                message: "Invalid credentials"
+            });
+        }
+
+        // Token banao
+        const token = jwt.sign(
+            { 
+                id: officer._id, 
+                email: officer.email,
+                category: officer.category,
+                isOfficer: true 
+            },
+            process.env.JWT_SECRET,
+            { expiresIn: "1d" }
+        );
+
+        // Cookie set karo
+        const isProduction = process.env.NODE_ENV === "production";
+        res.cookie("officerToken", token, {
+            httpOnly: true,
+            sameSite: isProduction ? "none" : "lax",
+            secure: isProduction ? true : false,
+            maxAge: 24 * 60 * 60 * 1000
+        });
+
+        res.status(200).json({
+            success: true,
+            message: "Officer login successful",
+            officer: {
+                id: officer._id,
+                email: officer.email,
+                username: officer.username,
+                lastname: officer.lastname,
+                category: officer.category,
+            }
+        });
+
+    } catch (error) {
+        console.error("Officer login error:", error);
+        res.status(500).json({
+            success: false,
+            message: "Internal server error"
+        });
+    }
+};
+ 
+
 // Logout
 const logout = async (req, res) => {
     try {
@@ -202,4 +276,4 @@ const logout = async (req, res) => {
     }
 };
 
-module.exports = { register, login, adminLogin, logout };
+module.exports = { register, login, adminLogin, logout, officerLogin };

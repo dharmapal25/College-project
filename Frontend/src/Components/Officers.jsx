@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import './Officers.css'
 import Navbar from './Navbar'
+import { useNavigate } from 'react-router-dom'
 
 const Officers = () => {
   const [officers, setOfficers] = useState([])
@@ -26,6 +27,10 @@ const Officers = () => {
     fetchOfficers()
   }, [])
 
+  const officersLogin = () => {
+    useNavigate('/officers-login');
+  }
+
   return (
    <>
    <div className="officers-container">
@@ -35,6 +40,7 @@ const Officers = () => {
     <div className="officers-page">
       <div className="officers-header">
         <h1>Officers</h1>
+        <h1 onClick={ officersLogin } >Login Officers</h1>
       </div>
 
       {loading && <p className="officers-loading">Loading officers...</p>}

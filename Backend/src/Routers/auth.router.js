@@ -1,7 +1,7 @@
 const express = require("express");
 const authRouters = express.Router();
 
-const { register, login, adminLogin, logout } = require("../Controllers/auth.controller");
+const { register, login, adminLogin, logout, officerLogin } = require("../Controllers/auth.controller");
 const { authMiddleware, adminMiddleware } = require("../middlewares/router.middleware");
 
 authRouters.get("/", (req, res) => {
@@ -13,7 +13,10 @@ authRouters.post("/register", register);
 authRouters.post("/login", login);
 
 // Admin/Officer Authentication
-authRouters.post("/admin-login", adminLogin);
+authRouters.post("/admin-login", adminMiddleware, adminLogin);
+
+// Officer Authentication
+authRouters.post("/officers-login", officerLogin);
 
 // Logout
 authRouters.post("/logout", logout);
