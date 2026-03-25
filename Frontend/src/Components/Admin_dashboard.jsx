@@ -52,7 +52,7 @@ const Admin_dashboard = () => {
   };
 
   useEffect(() => {
-    axios.get('https://college-pro.on.render.com/enquiries/logs')
+    axios.get('https://college-pro.onrender.com/enquiries/logs')
       .then(response => {
         setEnquiries(response.data.logs);
         console.log(response.data.logs);
