@@ -12,7 +12,7 @@ const Officers = () => {
     setLoading(true)
     setError('')
     try {
-      const response = await axios.get('https://college-pro.onrender.com/officers-team/officers')
+      const response = await axios.get('https://college-pro.onrender.com/officers-team/officers', { withCredentials: true })
       setOfficers(response.data.officers || [])
     } catch (err) {
       console.error(err)

@@ -9,6 +9,16 @@ const Admin_dashboard = () => {
   const [enquiries, setEnquiries] = useState([]);
   const [officers, setOfficers] = useState([]);
   const [adminToken, setAdminToken] = useState(null);
+  const [formData, setFormData] = useState({
+    username: '',
+    lastname: '',
+    email: '',
+    password: '',
+    phone: '',
+    category: 'infrastructure'
+  });
+  const [formStatus, setFormStatus] = useState({ message: '', type: '' });
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem('adminToken');
@@ -16,25 +26,30 @@ const Admin_dashboard = () => {
       navigate('/officers-login');
     } else {
       setAdminToken(token);
-      // Load mock data
-      loadMockData();
+      loadOfficers();
+      loadEnquiries();
     }
   }, [navigate]);
 
-  const loadMockData = () => {
-    // Mock enquiries data
-    // setEnquiries([
-    //   { id: 1, email: 'user1@test.com', location: 'Ward 1', description: 'Road issue', status: 'pending' },
-    //   { id: 2, email: 'user2@test.com', location: 'Ward 2', description: 'Water supply', status: 'in-progress' },
-    //   { id: 3, email: 'user3@test.com', location: 'Ward 3', description: 'Street light', status: 'resolved' },
-    // ]);
+  const loadEnquiries = () => {
+    axios.get('https://college-pro.onrender.com/enquiries/log-all', { withCredentials: true })
+      .then(response => {
+        setEnquiries(response.data.logs);
+        console.log(response.data.logs);
+      })
+      .catch(error => {
+        console.error('Error fetching enquiries:', error);
+      });
+  };
 
-    // Mock officers data
-    setOfficers([
-      { id: 1, name: 'Officer 1', email: 'officer1@college.com', department: 'Roads' },
-      { id: 2, name: 'Officer 2', email: 'officer2@college.com', department: 'Water Supply' },
-      { id: 3, name: 'Officer 3', email: 'officer3@college.com', department: 'Sanitation' },
-    ]);
+  const loadOfficers = () => {
+    axios.get('https://college-pro.onrender.com/officers-team/officers')
+      .then(response => {
+        setOfficers(response.data.officers || []);
+      })
+      .catch(error => {
+        console.error('Error fetching officers:', error);
+      });
   };
 
   const handleLogout = () => {
@@ -51,16 +66,64 @@ const Admin_dashboard = () => {
     }
   };
 
-  useEffect(() => {
-    axios.get('https://college-pro.onrender.com/enquiries/log-all', { withCredentials: true })
-      .then(response => {
-        setEnquiries(response.data.logs);
-        console.log(response.data.logs);
-      })
-      .catch(error => {
-        console.error('Error fetching enquiries:', error);
+  const handleFormChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleAddOfficer = async (e) => {
+    e.preventDefault();
+    setFormStatus({ message: '', type: '' });
+    setLoading(true);
+
+    try {
+      const response = await axios.post(
+        'https://college-pro.onrender.com/officers-team/add-officer',
+        {
+          username: formData.username,
+          lastname: formData.lastname,
+          email: formData.email,
+          password: formData.password,
+          phone: formData.phone,
+          category: formData.category
+        },
+        { withCredentials: true }
+      );
+
+      setFormStatus({
+        message: 'Officer added successfully!',
+        type: 'success'
       });
-  }, []);
+
+      // Reset form
+      setFormData({
+        username: '',
+        lastname: '',
+        email: '',
+        password: '',
+        phone: '',
+        category: 'infrastructure'
+      });
+
+      // Reload officers
+      loadOfficers();
+
+      // Switch back to officers tab after 2 seconds
+      setTimeout(() => {
+        setActiveTab('officers');
+      }, 2000);
+    } catch (error) {
+      setFormStatus({
+        message: error.response?.data?.message || error.message || 'Failed to add officer',
+        type: 'error'
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
 
 
@@ -94,7 +157,7 @@ const Admin_dashboard = () => {
               All Officers
             </button>
 
-{/* Add Officer form */}
+          {/* Add Officer form */}
             <button
             className={`admin-menu-item ${activeTab === 'add-officer' ? 'active' : ''}`}
             onClick={() => setActiveTab('add-officer')}
@@ -165,6 +228,101 @@ const Admin_dashboard = () => {
                   </table>
                 </div>
               </div>
+            ) : activeTab === 'add-officer' ? (
+              // Add Officer Form
+              <div className='admin-section'>
+                <h2>Add New Officer</h2>
+                <form onSubmit={handleAddOfficer} className='admin-officer-form'>
+                  <div className='admin-form-group'>
+                    <label>First Name *</label>
+                    <input
+                      type='text'
+                      name='username'
+                      value={formData.username}
+                      onChange={handleFormChange}
+                      placeholder='Enter first name'
+                      required
+                    />
+                  </div>
+
+                  <div className='admin-form-group'>
+                    <label>Last Name *</label>
+                    <input
+                      type='text'
+                      name='lastname'
+                      value={formData.lastname}
+                      onChange={handleFormChange}
+                      placeholder='Enter last name'
+                      required
+                    />
+                  </div>
+
+                  <div className='admin-form-group'>
+                    <label>Email *</label>
+                    <input
+                      type='email'
+                      name='email'
+                      value={formData.email}
+                      onChange={handleFormChange}
+                      placeholder='Enter email'
+                      required
+                    />
+                  </div>
+
+                  <div className='admin-form-group'>
+                    <label>Password *</label>
+                    <input
+                      type='password'
+                      name='password'
+                      value={formData.password}
+                      onChange={handleFormChange}
+                      placeholder='Enter password'
+                      required
+                    />
+                  </div>
+
+                  <div className='admin-form-group'>
+                    <label>Phone Number *</label>
+                    <input
+                      type='tel'
+                      name='phone'
+                      value={formData.phone}
+                      onChange={handleFormChange}
+                      placeholder='Enter phone number'
+                      required
+                    />
+                  </div>
+
+                  <div className='admin-form-group'>
+                    <label>Category *</label>
+                    <select
+                      name='category'
+                      value={formData.category}
+                      onChange={handleFormChange}
+                      required
+                    >
+                      <option value='infrastructure'>Infrastructure</option>
+                      <option value='academic'>Academic</option>
+                      <option value='hostel'>Hostel</option>
+                      <option value='other'>Other</option>
+                    </select>
+                  </div>
+
+                  {formStatus.message && (
+                    <div className={`admin-form-status ${formStatus.type}`}>
+                      {formStatus.message}
+                    </div>
+                  )}
+
+                  <button
+                    type='submit'
+                    className='admin-submit-btn'
+                    disabled={loading}
+                  >
+                    {loading ? 'Adding Officer...' : 'Add Officer'}
+                  </button>
+                </form>
+              </div>
             ) : (
               // Officers Section
               <div className='admin-section'>
@@ -176,7 +334,8 @@ const Admin_dashboard = () => {
                         <th>ID</th>
                         <th>Name</th>
                         <th>Email</th>
-                        <th>Department</th>
+                        <th>Category</th>
+                        <th>Phone</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -185,7 +344,8 @@ const Admin_dashboard = () => {
                           <td>{o.id}</td>
                           <td>{o.name}</td>
                           <td>{o.email}</td>
-                          <td>{o.department}</td>
+                          <td>{o.category}</td>
+                          <td>{o.phone}</td>
                         </tr>
                       ))}
                     </tbody>
