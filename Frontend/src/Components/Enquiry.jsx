@@ -61,7 +61,7 @@ const Enquiry = () => {
       })
 
       
-      setFormData({ email: '', location: '', category: '', description: '', emergency: false })
+      setFormData({ email: `${readEmail.email}`, location: '', category: '', description: '', emergency: false })
 
     } catch (error) {
       setStatus({
