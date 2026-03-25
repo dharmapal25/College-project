@@ -1,0 +1,267 @@
+/* Officers Login Styles */
+
+.officers-login-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 1rem;
+}
+
+.officers-login-wrapper {
+  width: 100%;
+  max-width: 450px;
+}
+
+.officers-login-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  animation: slideUp 0.5s ease;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.officers-login-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 2rem 1.5rem;
+  text-align: center;
+}
+
+.officers-login-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+  letter-spacing: 0.5px;
+}
+
+.officers-login-subtitle {
+  font-size: 0.95rem;
+  opacity: 0.9;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Error Message */
+.officers-error-message {
+  background: #fed7d7;
+  border-left: 4px solid #c53030;
+  color: #c53030;
+  padding: 1rem;
+  margin: 1.5rem 1.5rem 0;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  animation: shake 0.3s ease;
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+/* Form */
+.officers-login-form {
+  padding: 2rem 1.5rem;
+}
+
+.officers-form-group {
+  margin-bottom: 1.5rem;
+}
+
+.officers-form-label {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 0.6rem;
+  transition: color 0.3s ease;
+}
+
+.officers-form-input {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: all 0.3s ease;
+  background: #f7fafc;
+}
+
+.officers-form-input:focus {
+  outline: none;
+  border-color: #667eea;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.officers-form-input:disabled {
+  background: #edf2f7;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.officers-form-input::placeholder {
+  color: #a0aec0;
+}
+
+/* Submit Button */
+.officers-login-button {
+  width: 100%;
+  padding: 1rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 1rem;
+}
+
+.officers-login-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+}
+
+.officers-login-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.officers-login-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Footer */
+.officers-login-footer {
+  background: #f7fafc;
+  padding: 1.5rem;
+  text-align: center;
+  border-top: 1px solid #e2e8f0;
+}
+
+.officers-footer-text {
+  color: #718096;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.officers-footer-link {
+  color: #667eea;
+  font-weight: 600;
+  cursor: pointer;
+  margin-left: 0.5rem;
+  transition: all 0.3s ease;
+  text-decoration: underline;
+}
+
+.officers-footer-link:hover {
+  color: #764ba2;
+  text-decoration: none;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .officers-login-card {
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  }
+
+  .officers-login-header {
+    padding: 1.5rem 1.2rem;
+  }
+
+  .officers-login-title {
+    font-size: 1.5rem;
+  }
+
+  .officers-login-subtitle {
+    font-size: 0.9rem;
+  }
+
+  .officers-login-form {
+    padding: 1.5rem 1.2rem;
+  }
+
+  .officers-form-group {
+    margin-bottom: 1.2rem;
+  }
+
+  .officers-form-label {
+    font-size: 0.9rem;
+  }
+
+  .officers-form-input {
+    padding: 0.8rem 0.9rem;
+    font-size: 0.9rem;
+  }
+
+  .officers-login-button {
+    padding: 0.9rem;
+    font-size: 0.95rem;
+  }
+
+  .officers-login-footer {
+    padding: 1.2rem;
+  }
+
+  .officers-footer-text {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .officers-login-container {
+    padding: 0.5rem;
+  }
+
+  .officers-login-header {
+    padding: 1.2rem 1rem;
+  }
+
+  .officers-login-title {
+    font-size: 1.3rem;
+  }
+
+  .officers-login-subtitle {
+    font-size: 0.85rem;
+  }
+
+  .officers-login-form {
+    padding: 1.2rem 1rem;
+  }
+
+  .officers-form-input {
+    padding: 0.7rem 0.8rem;
+    font-size: 0.85rem;
+  }
+
+  .officers-error-message {
+    margin: 1rem 1rem 0;
+    padding: 0.8rem;
+    font-size: 0.9rem;
+  }
+}
