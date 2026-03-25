@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
+
+.admin-navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 28px;
+    height: 64px;
+    background: #ffffff;
+    border-bottom: 1.5px solid #e8e8e8;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+    font-family: 'DM Sans', sans-serif;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.admin-navbar__brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.admin-navbar__logo {
+    width: 36px;
+    height: 36px;
+    background: #1a1a1a;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.admin-navbar__logo-icon {
+    font-size: 16px;
+    color: #ffffff;
+}
+
+.admin-navbar__title {
+    font-size: 17px;
+    font-weight: 600;
+    color: #1a1a1a;
+    letter-spacing: -0.3px;
+}
+
+.admin-navbar__badge {
+    background: #1a1a1a;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 6px 16px;
+    border-radius: 8px;
+    letter-spacing: 0.4px;
+}
