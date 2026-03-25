@@ -32,9 +32,10 @@ const Admin_dashboard = () => {
   }, [navigate]);
 
   const loadEnquiries = () => {
-    axios.get('https://college-pro.onrender.com/enquiries/log-all', { withCredentials: true })
+    axios.get('https://college-pro.onrender.com/enquiries/all-enquiries', { withCredentials: true })
       .then(response => {
         setEnquiries(response.data.logs);
+        console.log('Total enquiries:', response.data.total);
         console.log(response.data.logs);
       })
       .catch(error => {

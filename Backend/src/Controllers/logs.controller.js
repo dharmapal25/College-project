@@ -50,6 +50,35 @@ const getUserAllLogs = async (req, res) => {
   }
 };
 
+const getAllEnquiriesAdmin = async (req, res) => {
+  try {
+    // Admin route - no email filter, fetch ALL enquiries
+    const logs = await userProblems
+      .find({})
+      .select("email location description Emergency status category createdAt")
+      .sort({ createdAt: -1 })
+      .limit(100);  // Increased limit for admin view
+
+    const formattedLogs = logs.map((item) => ({
+      id: item._id,
+      email: item.email,
+      category: item.category || 'other',
+      location: item.location,
+      description: item.description,
+      Emergency: item.Emergency,
+      status: item.status || 'pending',
+      createdAt: item.createdAt,
+    }));
+
+    res.status(200).json({ 
+      logs: formattedLogs,
+      total: await userProblems.countDocuments({})
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message || "Failed to fetch enquiries" });
+  }
+};
+
 const deleteLog = async (req, res) => {
   try {
     const { id } = req.params;
@@ -70,4 +99,4 @@ const deleteLog = async (req, res) => {
   }
 };
 
-module.exports = { getUserLogs, deleteLog, getUserAllLogs };
+module.exports = { getUserLogs, deleteLog, getUserAllLogs, getAllEnquiriesAdmin };
