@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 //host
-// axios.defaults.withCredentials = true;
+axios.defaults.withCredentials = true;
 
 const Signup = () => {
     const navigate = useNavigate();
@@ -27,8 +27,8 @@ const Signup = () => {
         e.preventDefault();
         console.log('Form submitted:', formData);
 // host
-        // axios.post('https://college-pro.onrender.com/auth/register', formData, {
-        axios.post('http://localhost:3000/auth/register', formData, {
+        axios.post('https://college-pro.onrender.com/auth/register', formData, {
+        // axios.post('http://localhost:3000/auth/register', formData, {
             headers: {
                 'Content-Type': 'application/json'
             }

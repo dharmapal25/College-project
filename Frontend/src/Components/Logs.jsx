@@ -12,8 +12,8 @@ const Logs = () => {
         setLoading(true)
         setError('')
         try {
-            // const response = await axios.get('https://college-pro.onrender.com/logs', {
-            const response = await axios.get('http://localhost:3000/enquiries/logs', {
+            const response = await axios.get('https://college-pro.onrender.com/enquiries/logs', {
+            // const response = await axios.get('http://localhost:3000/enquiries/logs', {
                 withCredentials: true,
             })
             setLogs(response.data.logs || [])

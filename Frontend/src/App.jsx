@@ -8,6 +8,7 @@ import Home from './Components/Home'
 import Enquiry from './Components/Enquiry'
 import Officers from './Components/Officers'
 import Logs from './Components/Logs'
+import Admin from './Components/Admin'
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
           <Route path='/enquiry' element={<Enquiry />} />
           <Route path="/officers-team/officers" element={<Officers />} />
           <Route path='/user-logs' element={<Logs />} />
+          <Route path='/admin' element={<Admin />} />
           <Route path="*" element={<Error404/>} />
         </Routes>
       </BrowserRouter>

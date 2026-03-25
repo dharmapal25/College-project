@@ -4,13 +4,17 @@ import axios from 'axios'
 import './Enquiry.css'
 
 const Enquiry = () => {
+
+  let readEmail = JSON.parse(localStorage.getItem("user"))
+
   const [formData, setFormData] = useState({
-    email: '',
+    email: `${readEmail.email}`,
     location: '',
     category: '',        // ✅ add kiya
     description: '',
     emergency: false,
   })
+  
   const [status, setStatus] = useState({ message: '', type: '' })
   const [loading, setLoading] = useState(false)
 
@@ -25,7 +29,6 @@ const Enquiry = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    // ✅ category bhi validate karo
     if (!formData.email || !formData.location || !formData.description || !formData.category) {
       setStatus({ message: 'Please fill all required fields.', type: 'error' })
       return
@@ -36,8 +39,8 @@ const Enquiry = () => {
 
     try {
       const response = await axios.post(
-        // 'https://college-pro.onrender.com/user-enquiry',
-        "http://localhost:3000/user-enquiry/enquiry",
+        'https://college-pro.onrender.com/user-enquiry/enquiry',
+        // "http://localhost:3000/user-enquiry/enquiry",
         {
           email: formData.email,
           location: formData.location,
@@ -84,6 +87,8 @@ const Enquiry = () => {
           <label>
             Email
             <input
+            readOnly
+            className='read'
               type="email"
               name="email"
               value={formData.email}
