@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-axios.defaults.withCredentials = true;
+//host
+// axios.defaults.withCredentials = true;
 
 const Signup = () => {
     const navigate = useNavigate();
@@ -25,8 +26,9 @@ const Signup = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log('Form submitted:', formData);
-
-        axios.post('https://college-pro.onrender.com/auth/register', formData, {
+// host
+        // axios.post('https://college-pro.onrender.com/auth/register', formData, {
+        axios.post('http://localhost:3000/auth/register', formData, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -46,7 +48,10 @@ const Signup = () => {
 
 
     return (
+
+        
         <div className='min-h-screen bg-linear-to-b from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center p-4'>
+            <title>Signup</title>
             <div className='w-full max-w-md'>
                 <div className='bg-gray-800 rounded-lg shadow-2xl p-8 border border-gray-700'>
 

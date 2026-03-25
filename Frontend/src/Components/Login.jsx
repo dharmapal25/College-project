@@ -26,14 +26,16 @@ const Login = () => {
         e.preventDefault();
         console.log('Login submitted:', formData);
 
-        axios.post('https://college-pro.onrender.com/auth/login', formData, {
+        // axios.post('https://college-pro.onrender.com/auth/login', formData, {
+        axios.post('http://localhost:3000/auth/login', formData, {
             headers: {
                 'Content-Type': 'application/json'
             }
         })
             .then(response => {
                 console.log('Success:', response.data);
-                navigate('/dashboard');
+                
+                navigate('/dashboard', { state:  response.data });
             })
             .catch(error => {
                 console.error("ERROR : ", error.response?.data || error.message);

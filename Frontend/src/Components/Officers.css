@@ -1,0 +1,105 @@
+.officers-page {
+  padding: 1.5rem;
+  background: #f8fafc;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.officers-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.officers-container {
+ display: flex;
+ width: 100%;
+}
+
+.officers-header h1 {
+  font-size: 2rem;
+  color: #1f2937;
+}
+
+.officers-search {
+  padding: 0.6rem 0.8rem;
+  width: 320px;
+  max-width: 100%;
+  border: 1px solid #cbd5e1;
+  border-radius: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.officers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.officer-card {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.officer-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.16);
+}
+
+.officer-image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  background: #cbd5e1;
+}
+
+.officer-data {
+  padding: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.officer-name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.officer-email,
+.officer-category {
+  font-size: 0.9rem;
+  color: #334155;
+}
+
+.officers-loading,
+.officers-error,
+.officers-empty {
+  margin-top: 1rem;
+  color: #334155;
+  font-weight: 500;
+}
+
+.officers-error {
+  color: #b91c1c;
+}
+
+@media (max-width: 640px) {
+  .officers-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .officers-search {
+    width: 100%;
+  }
+}

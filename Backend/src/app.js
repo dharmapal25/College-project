@@ -40,7 +40,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/auth", authRouters);
-app.use("/enquiry", enquiryRouter);
-
-
+app.use("/user-enquiry", enquiryRouter);
+app.use("/officers-team", require("./Routers/officers.router"));
+app.use("/enquiries", require("./Routers/logs.router"));
 module.exports = app
