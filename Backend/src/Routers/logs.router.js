@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const authMiddleware = require("../middlewares/router.middleware");
+const { authMiddleware } = require("../middlewares/router.middleware");
 const { getUserLogs, deleteLog } = require("../Controllers/logs.controller");
 
 router.get("/logs", authMiddleware, getUserLogs);
