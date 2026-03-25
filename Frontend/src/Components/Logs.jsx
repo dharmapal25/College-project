@@ -30,7 +30,8 @@ const Logs = () => {
 
     const deleteLog = async (id) => {
         try {
-            await axios.delete(`http://localhost:3000/enquiries/logs/${id}`, {
+            // await axios.delete(`http://localhost:3000/enquiries/logs/${id}`, {
+            await axios.delete(`https://college-pro.onrender.com/enquiries/logs/${id}`, {
                 withCredentials: true,
             })
             
