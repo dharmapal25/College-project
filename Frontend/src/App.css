@@ -17,6 +17,10 @@
   }
 }
 
+body {
+  background: #00635D;
+}
+
 .hero {
   position: relative;
 

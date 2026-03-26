@@ -40,11 +40,11 @@ const Logs = () => {
     }
 
     return (
-        <div className="logs-box">
+        <div className="logs-main-container">
             <Navbar />
             <div className="logs-page">
                 <div className="logs-header">
-                    <h3>My Enquiries</h3>
+                    <h1>My Enquiries</h1>
                 </div>
 
                 {loading && <p className="logs-loading">Loading your enquiries...</p>}
@@ -60,23 +60,23 @@ const Logs = () => {
                         return (
                             <div key={id} className="logs-card">
                                 <div className="logs-row">
-                                    <span className="logs-label">Category</span>
-                                    <span>{log.category || 'N/A'}</span>
+                                    <span className="logs-label">Category:</span>
+                                    <span className="logs-value">{log.category || 'N/A'}</span>
                                 </div>
                                 <div className="logs-row">
-                                    <span className="logs-label">Location</span>
-                                    <span>{log.location}</span>
+                                    <span className="logs-label">Location:</span>
+                                    <span className="logs-value">{log.location}</span>
                                 </div>
                                 <div className="logs-row">
-                                    <span className="logs-label">Description</span>
-                                    <span>{log.description}</span>
+                                    <span className="logs-label">Description:</span>
+                                    <span className="logs-value">{log.description}</span>
                                 </div>
                                 <div className="logs-row">
-                                    <span className="logs-label">Emergency</span>
-                                    <span>{String(log.Emergency || log.emergency || false)}</span>
+                                    <span className="logs-label">Emergency:</span>
+                                    <span className="logs-value">{String(log.Emergency || log.emergency || false)}</span>
                                 </div>
                                 <div className="logs-row">
-                                    <span className="logs-label">Status</span>
+                                    <span className="logs-label">Status:</span>
                                     <span className={`status ${status}`}>{status}</span>
                                 </div>
                                 <button className="logs-delete" onClick={() => deleteLog(id)}>

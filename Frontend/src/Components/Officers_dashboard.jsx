@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import Navbar from './Navbar'
 import './Officers_dashboard.css'
 
 const Officers_dashboard = () => {
@@ -148,7 +149,9 @@ const Officers_dashboard = () => {
   }
 
   return (
-    <div className='officers-dashboard-container'>
+    <div className='officers-dashboard-main-container'>
+      <Navbar />
+      <div className='officers-dashboard-container'>
       {/* Header */}
       <div className='officers-dashboard-header'>
         <div className='header-content'>
@@ -282,6 +285,7 @@ const Officers_dashboard = () => {
             </div>
           ))
         )}
+      </div>
       </div>
     </div>
   )
