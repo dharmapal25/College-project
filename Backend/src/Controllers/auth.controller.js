@@ -183,7 +183,7 @@ const login = async (req, res) => {
     }
 };
 
-// Admin Login
+// Admin Login - Direct Login with Admin Credentials
 const adminLogin = async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -196,31 +196,32 @@ const adminLogin = async (req, res) => {
             });
         }
 
-        // Check if email is in allowed officers database
-        const officer = await AllOfficers.findOne({ email: email.toLowerCase() });
-        if (!officer) {
+        // Admin credentials from environment variables
+        const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "admin@college.com";
+        const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "admin123";
+
+        // Check email
+        if (email !== ADMIN_EMAIL) {
             return res.status(401).json({ 
                 success: false, 
-                message: "Invalid credentials. Officer not found." 
+                message: "Invalid admin credentials" 
             });
         }
 
-        // Compare password
-        const isMatch = await bcrypt.compare(password, officer.password);
-        if (!isMatch) {
+        // Check password
+        if (password !== ADMIN_PASSWORD) {
             return res.status(401).json({ 
                 success: false, 
-                message: "Invalid email or password" 
+                message: "Invalid admin credentials" 
             });
         }
 
         // Generate admin token
         const adminToken = jwt.sign(
             { 
-                id: officer._id,
-                email: officer.email, 
+                email: email,
                 isAdmin: true,
-                category: officer.category
+                role: "admin"
             },
             process.env.JWT_SECRET || "default_secret_key",
             { expiresIn: "7d" }
@@ -239,12 +240,9 @@ const adminLogin = async (req, res) => {
             success: true, 
             message: "Admin login successful", 
             adminToken,
-            officer: {
-                id: officer._id,
-                email: officer.email,
-                username: officer.username,
-                lastname: officer.lastname,
-                category: officer.category
+            admin: {
+                email: ADMIN_EMAIL,
+                role: "admin"
             }
         });
     } catch (error) {

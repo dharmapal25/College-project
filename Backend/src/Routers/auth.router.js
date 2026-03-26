@@ -12,8 +12,8 @@ authRouters.get("/", (req, res) => {
 authRouters.post("/register", register);
 authRouters.post("/login", login);
 
-// Admin/Officer Authentication
-authRouters.post("/admin-login", adminMiddleware, adminLogin);
+// Admin/Officer Authentication (NO middleware - direct login)
+authRouters.post("/admin-login", adminLogin);
 
 // Officer Authentication
 authRouters.post("/officers-login", officerLogin);
