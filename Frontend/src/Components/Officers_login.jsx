@@ -42,6 +42,15 @@ const Officers_login = () => {
                 localStorage.setItem('officerEmail', response.data.officer.email);
                 localStorage.setItem('officerName', response.data.officer.username);
                 
+                // Store full officer data for dashboard
+                localStorage.setItem('officerData', JSON.stringify({
+                    id: response.data.officer.id,
+                    email: response.data.officer.email,
+                    username: response.data.officer.username,
+                    lastname: response.data.officer.lastname,
+                    category: response.data.officer.category
+                }));
+                
                 // Redirect based on isAdmin flag
                 if (response.data.isAdmin) {
                     // Admin officer - redirect to admin dashboard

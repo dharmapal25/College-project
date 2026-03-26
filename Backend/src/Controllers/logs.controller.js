@@ -173,4 +173,48 @@ const deleteLog = async (req, res) => {
   }
 };
 
-module.exports = { getUserLogs, deleteLog, getUserAllLogs, getAllEnquiriesAdmin };
+const getEnquiriesByCategory = async (req, res) => {
+  try {
+    const { category } = req.params;
+
+    if (!category) {
+      return res.status(400).json({
+        success: false,
+        message: "Category is required"
+      });
+    }
+
+    // Fetch enquiries by category (case-insensitive)
+    const logs = await userProblems
+      .find({ category: { $regex: category, $options: "i" } })
+      .select("email category location description Emergency status createdAt")
+      .sort({ createdAt: -1 });
+
+    const formattedLogs = logs.map((item) => ({
+      _id: item._id,
+      id: item._id,
+      email: item.email,
+      category: item.category || 'general',
+      location: item.location,
+      description: item.description,
+      Emergency: item.Emergency,
+      status: item.status || 'pending',
+      createdAt: item.createdAt,
+    }));
+
+    res.status(200).json({ 
+      success: true,
+      logs: formattedLogs,
+      total: formattedLogs.length,
+      category: category
+    });
+  } catch (error) {
+    console.error("Get enquiries by category error:", error.message);
+    res.status(500).json({ 
+      success: false,
+      message: "Failed to fetch enquiries by category. Please try again later." 
+    });
+  }
+};
+
+module.exports = { getUserLogs, deleteLog, getUserAllLogs, getAllEnquiriesAdmin, getEnquiriesByCategory };

@@ -1,0 +1,258 @@
+.officers-dashboard-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px;
+}
+
+.officers-dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 20px 30px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.header-content h1 {
+  margin: 0;
+  color: #333;
+  font-size: 28px;
+}
+
+.officer-info {
+  margin: 5px 0 0 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.logout-button {
+  padding: 10px 20px;
+  background: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.3s;
+}
+
+.logout-button:hover {
+  background: #c0392b;
+}
+
+.officers-dashboard-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  font-size: 18px;
+}
+
+.error-message {
+  background: #fee;
+  border: 1px solid #fcc;
+  color: #c33;
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+/* Stats */
+.officers-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.stat-number {
+  display: block;
+  font-size: 32px;
+  font-weight: bold;
+  color: #667eea;
+  margin-bottom: 10px;
+}
+
+.stat-label {
+  display: block;
+  color: #666;
+  font-size: 14px;
+}
+
+/* Filters */
+.officers-filters {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 10px 20px;
+  background: white;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+.filter-btn:hover {
+  border-color: #667eea;
+  color: #667eea;
+}
+
+.filter-btn.active {
+  background: #667eea;
+  color: white;
+  border-color: #667eea;
+}
+
+/* Enquiries List */
+.officers-enquiries-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 20px;
+}
+
+.enquiry-card {
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.enquiry-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+}
+
+.enquiry-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+.enquiry-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.enquiry-title h3 {
+  margin: 0;
+  color: #333;
+  font-size: 16px;
+}
+
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #333;
+}
+
+.enquiry-date {
+  color: #999;
+  font-size: 12px;
+  margin: 0;
+}
+
+.enquiry-body {
+  margin-bottom: 15px;
+}
+
+.enquiry-body p {
+  margin: 10px 0;
+  font-size: 13px;
+  color: #555;
+  line-height: 1.4;
+}
+
+.enquiry-body strong {
+  color: #333;
+}
+
+.enquiry-email {
+  word-break: break-all;
+}
+
+.enquiry-emergency {
+  color: #e74c3c;
+  font-weight: bold;
+  padding: 10px;
+  background: #fee;
+  border-radius: 5px;
+}
+
+.enquiry-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.action-btn {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+.action-btn:hover {
+  opacity: 0.8;
+}
+
+.in-progress-btn {
+  background: #3498db;
+  color: white;
+}
+
+.resolved-btn {
+  background: #27ae60;
+  color: white;
+}
+
+.no-enquiries {
+  grid-column: 1 / -1;
+  text-align: center;
+  background: white;
+  padding: 40px;
+  border-radius: 10px;
+  color: #999;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .officers-dashboard-header {
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+  }
+
+  .officers-enquiries-list {
+    grid-template-columns: 1fr;
+  }
+
+  .officers-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
