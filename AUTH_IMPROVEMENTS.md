@@ -1,275 +1,549 @@
-# ✅ Authentication Improvements
+# ✅ Authentication & Error Handling Improvements
 
-## 🔒 Security Enhancements Made
-
-### 1. **Password Validation & Strength**
-- ✅ Minimum 8 characters (was 6)
-- ✅ Requires uppercase letters
-- ✅ Requires lowercase letters
-- ✅ Requires numbers
-- ✅ Requires special characters (@$!%*?&)
-- ✅ Hashing with bcrypt salt rounds 12 (was 10)
-
-**Backend:** [Backend/src/Controllers/auth.controller.js](Backend/src/Controllers/auth.controller.js#L10-L18)
-
-**Frontend:** [Frontend/src/utils/passwordValidation.js](Frontend/src/utils/passwordValidation.js)
-
-### 2. **Input Validation & Sanitization**
-- ✅ Email format validation (regex check)
-- ✅ Email lowercase conversion and trimming
-- ✅ Username length validation (3-50 characters)
-- ✅ Input sanitization (remove HTML tags)
-- ✅ Remove unnecessary spaces
-
-**Code:** [Backend/src/Controllers/auth.controller.js#L14-L21](Backend/src/Controllers/auth.controller.js#L14-L21)
-
-### 3. **Improved Error Handling**
-- ✅ Generic error messages (prevent user enumeration)
-- ✅ Specific validation error messages
-- ✅ Security logging with [AUTH] tags
-- ✅ Proper HTTP status codes
-- ✅ Better error messages to users
-
-**Examples:**
-```javascript
-// Before: "User not found" - reveals if email exists
-// After: "Invalid email or password" - generic message
-```
-
-### 4. **Token Management**
-- ✅ Access tokens (1 hour expiration)
-- ✅ Refresh tokens (7 days expiration)
-- ✅ Token refresh endpoint (`/api/auth/refresh-token`)
-- ✅ Automatic token validation
-- ✅ Token expiration warnings
-
-**Endpoints:**
-- `POST /api/auth/refresh-token` - Refresh access token
-
-**Code:** [Backend/src/Controllers/auth.controller.js#L264-L323](Backend/src/Controllers/auth.controller.js#L264-L323)
-
-### 5. **Cookie Security**
-- ✅ httpOnly cookies (prevent XSS attacks)
-- ✅ Secure flag in production
-- ✅ SameSite protection (prevent CSRF)
-- ✅ Separate cookies for different user roles
-
-**Cookie Types:**
-- `token` - User authentication (1 hour)
-- `refreshToken` - Token refresh (7 days)
-- `adminToken` - Admin authentication (2 hours)
-- `adminRefreshToken` - Admin token refresh (7 days)
-- `officerToken` - Officer authentication (2 hours)
-- `officerRefreshToken` - Officer token refresh (7 days)
-
-### 6. **Admin Credentials Security**
-- ✅ Support for hashed admin passwords
-- ✅ Use `ADMIN_PASSWORD_HASH` environment variable
-- ✅ Fallback to plain text with warning (for backwards compatibility)
-
-**Setup:**
-```bash
-# Generate hashed password:
-# echo -n "your_secure_password" | bcrypt 12
-
-ADMIN_PASSWORD_HASH=$2b$12$9vN5bZ2xF.5cE7d3mK2P...
-ADMIN_EMAIL=admin@college.com
-```
-
-### 7. **Enhanced Middleware**
-- ✅ Support for Authorization Bearer token header
-- ✅ Token expiration detection
-- ✅ User existence validation
-- ✅ Admin/Officer role verification
-- ✅ New officer middleware
-
-**Endpoints Protected:**
-```javascript
-// User routes
-authMiddleware - Requires valid user token
-
-// Admin routes
-adminMiddleware - Requires valid admin token
-
-// Officer routes
-officerMiddleware - Requires valid officer token
-```
-
-### 8. **Authentication Services**
-- ✅ Centralized authentication service (frontend)
-- ✅ API configuration management
-- ✅ Password validation utilities
-- ✅ Authentication state management
-
-**Files:**
-- [Frontend/src/services/authService.js](Frontend/src/services/authService.js)
-- [Frontend/src/config/api.js](Frontend/src/config/api.js)
-- [Frontend/src/utils/passwordValidation.js](Frontend/src/utils/passwordValidation.js)
+## 🔧 Overview
+Complete overhaul of authentication system with:
+- ✅ Better error messages and validation
+- ✅ Proper MongoDB fetching and queries
+- ✅ Token expiration handling
+- ✅ Case-insensitive email matching
+- ✅ Authorization header support
+- ✅ Better security practices
 
 ---
 
-## 📋 API Routes
+## 📋 Changes Made
 
-### Authentication Routes
-```
-POST   /api/auth/register          - Register new user
-POST   /api/auth/login             - User login
-POST   /api/auth/admin-login       - Admin login
-POST   /api/auth/officers-login    - Officer login
-POST   /api/auth/refresh-token     - Refresh access token
-POST   /api/auth/logout            - Logout (clears all cookies)
-GET    /api/auth/profile           - Get user profile (protected)
+### 1. **Auth Controller** (`Backend/src/Controllers/auth.controller.js`)
+
+#### Register Endpoint Improvements:
+✅ **Better Validation:**
+- Email format validation using regex
+- Password length validation (min 6 chars)
+- Username and lastname length validation (min 3 chars)
+- Trim and lowercase email for consistency
+
+✅ **MongoDB Error Handling:**
+- Handle MongoDB ValidationError
+- Handle duplicate key errors (code 11000)
+- Return specific error messages instead of generic "Internal server error"
+
+✅ **Response:**
+```javascript
+{
+  success: true,
+  message: "User registered successfully. Please login.",
+  user: {
+    id: user._id,
+    email: user.email,
+    username: user.username,
+    lastname: user.lastname
+  }
+}
 ```
 
 ---
 
-## 🔧 Environment Variables Required
+#### Login Endpoint Improvements:
+✅ **Better Validation:**
+- Email format validation
+- Case-insensitive email search
+- Distinct error messages for "user not found" and "invalid password"
 
-```bash
-# JWT Configuration
-JWT_SECRET=your_jwt_secret_key
-JWT_REFRESH_SECRET=your_refresh_secret_key  # Optional, defaults to JWT_SECRET
+✅ **Token Enhancement:**
+- Token now includes user role
+- Token expiration increased to 7 days (from 1 day)
+- Uses fallback JWT_SECRET if env var not set
+- Includes user role in token payload
 
-# Admin Credentials
-ADMIN_EMAIL=admin@college.com
-ADMIN_PASSWORD_HASH=$2b$12$... # Hashed password (recommended)
-# OR
-ADMIN_PASSWORD=admin123        # Plain text (not recommended)
-
-# App Environment
-NODE_ENV=production
-
-# Frontend API URL (optional, defaults to https://college-pro.onrender.com/api)
-REACT_APP_API_URL=https://college-pro.onrender.com/api
+✅ **Response:**
+```javascript
+{
+  success: true,
+  message: "Login successful",
+  token: "jwt_token_here",
+  user: {
+    id: user._id,
+    email: user.email,
+    username: user.username,
+    lastname: user.lastname,
+    role: user.role
+  }
+}
 ```
 
 ---
 
-## 🚀 Frontend Usage
+#### Admin Login Improvements:
+✅ **Changed from hardcoded credentials to MongoDB:**
+- Now fetches admin users from `AllOfficers` collection
+- Uses bcrypt password comparison (secure)
+- Better error messages
 
-### Using AuthService
+✅ **Token includes officer details:**
+- Officer ID
+- Category information
+- Admin flag
 
+✅ **Response:**
 ```javascript
-import AuthService from './services/authService';
+{
+  success: true,
+  message: "Admin login successful",
+  adminToken: "jwt_token_here",
+  officer: {
+    id: officer._id,
+    email: officer.email,
+    username: officer.username,
+    lastname: officer.lastname,
+    category: officer.category
+  }
+}
+```
 
-// Register
-const result = await AuthService.register({
-  username: 'John',
-  lastname: 'Doe',
-  email: 'john@example.com',
-  password: 'SecurePass@123'
-});
+---
 
-// Login
-const loginResult = await AuthService.login('john@example.com', 'SecurePass@123');
+#### Officer Login Improvements:
+✅ **Better Validation:**
+- Email format validation
+- Case-insensitive email matching
+- Specific error messages
 
-// Check authentication
-if (AuthService.isAuthenticated()) {
-  const user = AuthService.getCurrentUser();
-  console.log(user);
+✅ **Token Enhancement:**
+- 7-day expiration
+- Includes officer ID and category
+- Returns officer token in response
+
+✅ **Response:**
+```javascript
+{
+  success: true,
+  message: "Officer login successful",
+  token: "jwt_token_here",
+  officer: {
+    id: officer._id,
+    email: officer.email,
+    username: officer.username,
+    lastname: officer.lastname,
+    category: officer.category
+  }
+}
+```
+
+---
+
+#### Logout Improvements:
+✅ **Clear all tokens:**
+- Clears `token` cookie
+- Clears `adminToken` cookie
+- Clears `officerToken` cookie
+
+✅ **Better error handling:**
+```javascript
+{
+  success: true,
+  message: "Logged out successfully"
+}
+```
+
+---
+
+### 2. **Auth Middleware** (`Backend/src/middlewares/router.middleware.js`)
+
+#### authMiddleware Improvements:
+✅ **Multiple token sources:**
+- Checks cookies first
+- Falls back to Authorization header (Bearer token)
+
+✅ **Better error handling:**
+- Detects token expiration vs invalid token
+- Returns specific error messages
+
+✅ **User lookup:**
+- Finds user in MongoDB
+- Attaches user to request object
+- Stores userId for convenience
+
+✅ **Error responses:**
+```javascript
+// Token expired
+{
+  success: false,
+  redirect: "/login",
+  message: "Token has expired. Please login again."
 }
 
-// Logout
-await AuthService.logout();
+// Invalid token
+{
+  success: false,
+  redirect: "/login",
+  message: "Invalid token. Please login again."
+}
 
-// Refresh token
-await AuthService.refreshToken();
+// Missing token
+{
+  success: false,
+  redirect: "/login",
+  message: "Unauthorized: Authentication token is required"
+}
 ```
 
-### Password Validation
+---
 
+#### adminMiddleware Improvements:
+✅ **Multiple token sources:**
+- Checks cookies first
+- Falls back to Authorization header
+
+✅ **Specific error messages:**
+- Distinguishes between token expiration and invalid token
+- Clear permission denied message
+
+✅ **Response:**
 ```javascript
-import { validatePassword, getPasswordStrength } from './utils/passwordValidation';
+// Admin token expired
+{
+  success: false,
+  redirect: "/officers-login",
+  message: "Admin token has expired. Please login again."
+}
 
-const password = 'MySecure@Pass123';
-const validation = validatePassword(password);
-
-console.log(validation.isStrong);      // true/false
-console.log(validation.requirements);  // { minLength: true, hasUppercase: true, ... }
-console.log(validation.message);       // "Password is strong!" or specific requirements
+// Not admin
+{
+  success: false,
+  message: "Forbidden: Admin access required"
+}
 ```
 
 ---
 
-## 🔐 Security Best Practices
+### 3. **Enquiry Controller** (`Backend/src/Controllers/enquiry.controller.js`)
 
-1. **Password Strength**
-   - Users MUST use passwords with at least 8 characters
-   - Must include uppercase, lowercase, numbers, and special characters
-   - Show real-time password strength indicator
+#### Improvements:
+✅ **Better Validation:**
+- All fields validation with specific messages
+- Email format validation
+- Case-insensitive email matching
+- Trim whitespace from inputs
 
-2. **Token Management**
-   - Access tokens expire after 1 hour
-   - Use refresh tokens to get new access tokens
-   - Implement automatic token refresh before expiration
-   - Clear tokens on logout
+✅ **MongoDB User Verification:**
+- Verifies user exists before creating enquiry
+- Uses case-insensitive email lookup
+- Proper error messages
 
-3. **Error Messages**
-   - Don't reveal if email/username exists
-   - Use generic error messages for login failures
-   - Provide specific validation errors during registration
+✅ **Daily Limit Check:**
+- Properly checks today's date range
+- Uses MongoDB count documents
+- Case-insensitive email filtering
 
-4. **CORS & CSRF**
-   - Use httpOnly cookies (cannot be accessed by JavaScript)
-   - Implement SameSite cookies
-   - Validate origin in CORS configuration
+✅ **Better Response:**
+```javascript
+{
+  success: true,
+  message: "Enquiry submitted successfully. (1/3 today)",
+  enquiry: {
+    id: newEnquiry._id,
+    email: newEnquiry.email,
+    category: newEnquiry.category,
+    location: newEnquiry.location,
+    status: newEnquiry.status,
+    createdAt: newEnquiry.createdAt
+  }
+}
+```
 
-5. **Rate Limiting**
-   - Consider implementing rate limiting on login endpoints
-   - Prevent brute force attacks
-
-6. **Logging**
-   - Log authentication events ([AUTH] tags)
-   - Monitor failed login attempts
-   - Alert on unusual patterns
-
----
-
-## ✅ Testing Checklist
-
-- [ ] User registration with strong password validation
-- [ ] User registration with weak password (should fail)
-- [ ] User login with correct credentials
-- [ ] User login with incorrect credentials (generic error)
-- [ ] Admin login with correct credentials
-- [ ] Admin login with incorrect credentials
-- [ ] Officer login functionality
-- [ ] Token refresh on expiration
-- [ ] Logout clears all cookies
-- [ ] Protected routes return 401 without token
-- [ ] User enumeration prevention (same error for wrong password/email)
+✅ **Error Handling:**
+- MongoDB validation errors
+- Rate limit errors (429)
+- User not found errors (404)
 
 ---
 
-## 📝 Migration Guide (If Updating Existing Project)
+### 4. **Logs Controller** (`Backend/src/Controllers/logs.controller.js`)
 
-1. **Backup current data**
-2. **Update environment variables** with new JWT secrets
-3. **Re-hash admin password** using bcrypt
-4. **Deploy backend changes** first
-5. **Test all auth endpoints**
-6. **Deploy frontend changes**
-7. **Test complete auth flow**
+#### getUserLogs Improvements:
+✅ **Better MongoDB Queries:**
+- Case-insensitive email filtering
+- Properly selects `category` field
+- Sorts by creation date (newest first)
+
+✅ **Response Format:**
+```javascript
+{
+  success: true,
+  logs: [
+    {
+      _id: "mongodb_id",
+      id: "mongodb_id",
+      email: "user@example.com",
+      category: "infrastructure",
+      location: "Sector 5",
+      description: "Issue description",
+      Emergency: false,
+      status: "pending",
+      createdAt: "2026-03-26T..."
+    }
+  ],
+  total: 5
+}
+```
 
 ---
 
-## 🎯 Future Improvements
+#### getUserAllLogs Improvements:
+✅ **Pagination:**
+- Increased limit to 50 records (from 20)
+- Case-insensitive email filtering
+- Returns formatted logs with total count
 
-- [ ] Implement rate limiting (express-rate-limit)
-- [ ] Add email verification on registration
-- [ ] Implement password reset functionality
-- [ ] Add 2FA (Two-Factor Authentication)
-- [ ] Session management (max 3 active sessions)
-- [ ] Login attempt logging and alerts
-- [ ] CAPTCHA on failed login attempts
-- [ ] Automatic token rotation
+---
+
+#### getAllEnquiriesAdmin Improvements:
+✅ **Admin View:**
+- No email filter - shows all enquiries
+- Returns up to 500 records
+- Returns both formatted logs and total count
+- Shows number of returned records
+
+✅ **Response:**
+```javascript
+{
+  success: true,
+  logs: [...],
+  total: 150,        // Total enquiries in database
+  returned: 100      // Number of records returned
+}
+```
+
+---
+
+#### deleteLog Improvements:
+✅ **Security:**
+- Validates log ID
+- Verifies user ownership (case-insensitive)
+- Only user can delete their own logs
+
+✅ **Error Handling:**
+- Log not found (404)
+- Unauthorized access (403)
+- Proper error messages
+
+---
+
+## 🔒 Security Improvements
+
+### Token Security:
+- ✅ JWT tokens with 7-day expiration
+- ✅ HttpOnly cookies (not accessible from JavaScript)
+- ✅ Secure flag in production (HTTPS only)
+- ✅ SameSite protection against CSRF
+- ✅ Token expiration detection and handling
+
+### Password Security:
+- ✅ bcrypt hashing with salt (10 rounds)
+- ✅ Password comparison with bcrypt (timing-safe)
+- ✅ Never returns raw passwords in responses
+
+### Data Validation:
+- ✅ Email format validation using regex
+- ✅ Required field validation
+- ✅ Case-insensitive email matching
+- ✅ Input trimming and sanitization
+
+### Database Security:
+- ✅ MongoDB queries use case-insensitive matching
+- ✅ User ownership verification
+- ✅ Proper error messages (don't leak user data)
+
+---
+
+## 📊 HTTP Status Codes
+
+| Code | Meaning | When Used |
+|------|---------|-----------|
+| 201 | Created | User registered, enquiry submitted |
+| 200 | OK | Login successful, data fetched |
+| 400 | Bad Request | Validation failed, missing fields |
+| 401 | Unauthorized | Invalid token, not authenticated |
+| 403 | Forbidden | Not authorized (not admin), can't delete others' logs |
+| 404 | Not Found | User not found, enquiry not found |
+| 409 | Conflict | Email already exists |
+| 429 | Too Many Requests | Daily enquiry limit reached |
+| 500 | Server Error | Internal server error |
+
+---
+
+## 📝 Testing Guide
+
+### Test Registration:
+```bash
+POST /api/auth/register
+{
+  "username": "john",
+  "lastname": "doe",
+  "email": "john@example.com",
+  "password": "password123"
+}
+```
+
+**Expected Response (201):**
+```json
+{
+  "success": true,
+  "message": "User registered successfully. Please login.",
+  "user": {
+    "id": "user_id",
+    "email": "john@example.com",
+    "username": "john",
+    "lastname": "doe"
+  }
+}
+```
+
+---
+
+### Test Login:
+```bash
+POST /api/auth/login
+{
+  "email": "john@example.com",
+  "password": "password123"
+}
+```
+
+**Expected Response (200):**
+```json
+{
+  "success": true,
+  "message": "Login successful",
+  "token": "jwt_token",
+  "user": {
+    "id": "user_id",
+    "email": "john@example.com",
+    "username": "john",
+    "lastname": "doe",
+    "role": "user"
+  }
+}
+```
+
+**Cookie set:** `token=jwt_token; HttpOnly; Secure; SameSite=None/Lax`
+
+---
+
+### Test Protected Route:
+```bash
+GET /api/logs/logs
+Headers:
+  Authorization: Bearer jwt_token
+  Cookie: token=jwt_token
+```
+
+**Expected Response (200):**
+```json
+{
+  "success": true,
+  "logs": [...],
+  "total": 5
+}
+```
+
+---
+
+### Test Admin Login:
+```bash
+POST /api/auth/admin-login
+{
+  "email": "admin@example.com",
+  "password": "password123"
+}
+```
+
+**Expected Response (200):**
+```json
+{
+  "success": true,
+  "message": "Admin login successful",
+  "adminToken": "jwt_token",
+  "officer": {
+    "id": "officer_id",
+    "email": "admin@example.com",
+    "username": "admin",
+    "lastname": "user",
+    "category": "infrastructure"
+  }
+}
+```
+
+---
+
+## 🚀 Environment Variables Required
+
+```env
+# JWT Secret for token signing
+JWT_SECRET=your_secret_key_here
+
+# Node environment
+NODE_ENV=production
+
+# MongoDB connection
+MONGO_URI=mongodb+srv://user:pass@cluster.mongodb.net/database
+
+# Optional (for admin login fallback)
+ADMIN_EMAIL=admin@college.com
+ADMIN_PASSWORD=admin123
+```
+
+---
+
+## ✅ What's Fixed
+
+| Issue | Before | After |
+|-------|--------|-------|
+| Email Validation | None | Regex validation |
+| Password Hashing | Yes | Yes (improved) |
+| Token Expiration | 1 day | 7 days |
+| Error Messages | Generic | Specific & helpful |
+| Email Matching | Case-sensitive | Case-insensitive |
+| MongoDB Queries | Sometimes inconsistent | Consistent & optimized |
+| Token Sources | Cookies only | Cookies + Authorization header |
+| Token Expiration Detection | No | Yes (TokenExpiredError) |
+| Admin Credentials | Hardcoded | MongoDB-based |
+| Rate Limiting | Basic | Proper date range check |
+| User Ownership | Checked | Checked (case-insensitive) |
+
+---
+
+## 🔄 Migration Notes
+
+### For Frontend:
+1. Update login/signup error handling to use `response.data.message`
+2. Store token from login response
+3. Include token in Authorization header if needed:
+   ```javascript
+   headers: {
+     'Authorization': `Bearer ${token}`
+   }
+   ```
+
+### For Deployment:
+1. Set `NODE_ENV=production` environment variable
+2. Set `JWT_SECRET` to a strong random string
+3. Ensure MongoDB is accessible
+4. Restart backend service
+
+### For Existing Users:
+- Old tokens will still work until expiration
+- New registrations use improved validation
+- Clear browser cookies if experiencing issues
 
 ---
 
 ## 📞 Support
 
-For issues or questions regarding authentication:
-1. Check console logs for [AUTH] tagged messages
-2. Verify environment variables are set correctly
-3. Ensure JWT secrets match between frontend and backend
-4. Check network tab for API response errors
+For issues with authentication, check:
+1. Is JWT_SECRET set correctly?
+2. Is MongoDB connected?
+3. Is user registered in database?
+4. Is token expired?
+5. Check browser console for error messages
+6. Check server logs for detailed errors
