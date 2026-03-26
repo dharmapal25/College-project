@@ -4,11 +4,8 @@ const bcrypt = require("bcrypt");
 
 const getOfficers = async (req, res) => {
   try {
-    // Use lean() for read-only queries, much faster
-    const officers = await AllOfficers
-      .find({})
-      .select("-password")
-      .lean();
+    // fetch from allOfficers collection
+    const officers = await AllOfficers.find({}).select("-password");
 
     const formatted = officers.map((officer) => ({
       id: officer._id,
@@ -19,8 +16,6 @@ const getOfficers = async (req, res) => {
       phone: officer.Phone,
     }));
 
-    // Set cache headers for public data
-    res.set('Cache-Control', 'public, max-age=600'); // Cache for 10 minutes
     res.status(200).json({ officers: formatted });
   } catch (error) {
     res.status(500).json({ message: error.message || "Failed to fetch officers" });

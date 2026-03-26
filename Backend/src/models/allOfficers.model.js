@@ -52,11 +52,9 @@ const officerSchema = new mongoose.Schema({
     {
         timestamps: true,
     },
+
 )
 
-// Add indexes for faster queries
-officerSchema.index({ email: 1 });
-officerSchema.index({ category: 1 });
 
 const AllOfficers = mongoose.model("allOfficers", officerSchema);
 

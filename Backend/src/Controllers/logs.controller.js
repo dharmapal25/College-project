@@ -3,21 +3,11 @@ const userProblems = require("../models/userProblems.model");
 const getUserLogs = async (req, res) => {
   try {
     const userEmail = req.user.email;
-    const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 10;
-    const skip = (page - 1) * limit;
 
-    // Use lean() for faster read-only queries
     const logs = await userProblems
       .find({ email: userEmail })
       .select("email location description Emergency status createdAt")
-      .sort({ createdAt: -1 })
-      .lean()
-      .skip(skip)
-      .limit(limit);
-
-    // Get total count for pagination
-    const total = await userProblems.countDocuments({ email: userEmail });
+      .sort({ createdAt: -1 });
 
     const formattedLogs = logs.map((item) => ({
       id: item._id,
@@ -30,16 +20,7 @@ const getUserLogs = async (req, res) => {
       createdAt: item.createdAt,
     }));
 
-    res.set('Cache-Control', 'private, max-age=300'); // Cache for 5 minutes
-    res.status(200).json({ 
-      logs: formattedLogs,
-      pagination: {
-        page,
-        limit,
-        total,
-        pages: Math.ceil(total / limit)
-      }
-    });
+    res.status(200).json({ logs: formattedLogs });
   } catch (error) {
     res.status(500).json({ message: error.message || "Failed to fetch logs" });
   }
@@ -47,19 +28,10 @@ const getUserLogs = async (req, res) => {
 const getUserAllLogs = async (req, res) => {
   try {
     const userEmail = req.user.email;
-    const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 20;
-    const skip = (page - 1) * limit;
 
-    const logs = await userProblems
-      .find({ email: userEmail })
+    const logs = await userProblems.find({ email: userEmail })  // ✅ filter by user
       .select("email location description Emergency status createdAt")
-      .sort({ createdAt: -1 })
-      .lean()
-      .skip(skip)
-      .limit(limit);
-
-    const total = await userProblems.countDocuments({ email: userEmail });
+      .sort({ createdAt: -1 }).limit(20);  // ✅ 20 records
 
     const formattedLogs = logs.map((item) => ({
       id: item._id,
@@ -72,16 +44,7 @@ const getUserAllLogs = async (req, res) => {
       createdAt: item.createdAt,
     }));
 
-    res.set('Cache-Control', 'private, max-age=300');
-    res.status(200).json({ 
-      logs: formattedLogs,
-      pagination: {
-        page,
-        limit,
-        total,
-        pages: Math.ceil(total / limit)
-      }
-    });
+    res.status(200).json({ logs: formattedLogs });
   } catch (error) {
     res.status(500).json({ message: error.message || "Failed to fetch logs" });
   }
@@ -89,25 +52,12 @@ const getUserAllLogs = async (req, res) => {
 
 const getAllEnquiriesAdmin = async (req, res) => {
   try {
-    const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 20;
-    const skip = (page - 1) * limit;
-    const { status, category } = req.query;
-
-    // Build filter
-    const filter = {};
-    if (status) filter.status = status;
-    if (category) filter.category = category;
-
+    // Admin route - no email filter, fetch ALL enquiries
     const logs = await userProblems
-      .find(filter)
+      .find({})
       .select("email location description Emergency status category createdAt")
       .sort({ createdAt: -1 })
-      .lean()
-      .skip(skip)
-      .limit(limit);
-
-    const total = await userProblems.countDocuments(filter);
+      .limit(100);  // Increased limit for admin view
 
     const formattedLogs = logs.map((item) => ({
       id: item._id,
@@ -120,15 +70,9 @@ const getAllEnquiriesAdmin = async (req, res) => {
       createdAt: item.createdAt,
     }));
 
-    res.set('Cache-Control', 'private, max-age=300');
     res.status(200).json({ 
       logs: formattedLogs,
-      pagination: {
-        page,
-        limit,
-        total,
-        pages: Math.ceil(total / limit)
-      }
+      total: await userProblems.countDocuments({})
     });
   } catch (error) {
     res.status(500).json({ message: error.message || "Failed to fetch enquiries" });
