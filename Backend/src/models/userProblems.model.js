@@ -46,5 +46,12 @@ const userProblemSchema = new mongoose.Schema({
 
 }, { timestamps: true });
 
+// Add indexes for faster queries
+userProblemSchema.index({ email: 1 });
+userProblemSchema.index({ email: 1, createdAt: -1 });
+userProblemSchema.index({ status: 1 });
+userProblemSchema.index({ category: 1 });
+userProblemSchema.index({ createdAt: -1 });
+
 const userProblems = mongoose.model("userProblems", userProblemSchema);
 module.exports = userProblems;

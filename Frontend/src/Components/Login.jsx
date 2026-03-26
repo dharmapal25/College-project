@@ -34,7 +34,7 @@ const Login = () => {
             return;
         }
 
-        axios.post('https://college-pro.onrender.com/auth/login', formData, {
+        axios.post('https://college-pro.onrender.com/api/auth/login', formData, {
             headers: {
                 'Content-Type': 'application/json'
             }

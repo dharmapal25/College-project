@@ -16,7 +16,7 @@ const Officers = () => {
     setError('')
     try {
       // const response = await axios.get('https://college-pro.onrender.com/officers-team/officers', { withCredentials: true })
-      const response = await axios.get('https://college-pro.onrender.com/officers-team/officers', { withCredentials: true })
+      const response = await axios.get('https://college-pro.onrender.com/api/officers-team', { withCredentials: true })
       setOfficers(response.data.officers || [])
     } catch (err) {
       console.error(err)

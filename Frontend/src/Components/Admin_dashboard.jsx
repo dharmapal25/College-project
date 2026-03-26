@@ -32,7 +32,7 @@ const Admin_dashboard = () => {
   }, [navigate]);
 
   const loadEnquiries = () => {
-    axios.get('https://college-pro.onrender.com/enquiries/all-enquiries', { withCredentials: true })
+    axios.get('https://college-pro.onrender.com/api/logs/all-enquiries', { withCredentials: true })
       .then(response => {
         setEnquiries(response.data.logs);
         console.log('Total enquiries:', response.data.total);
@@ -44,7 +44,7 @@ const Admin_dashboard = () => {
   };
 
   const loadOfficers = () => {
-    axios.get('https://college-pro.onrender.com/officers-team/officers')
+    axios.get('https://college-pro.onrender.com/api/officers-team')
       .then(response => {
         setOfficers(response.data.officers || []);
       })
@@ -82,7 +82,7 @@ const Admin_dashboard = () => {
 
     try {
       const response = await axios.post(
-        'https://college-pro.onrender.com/officers-team/add-officer',
+        'https://college-pro.onrender.com/api/officers-team/add-officer',
         {
           username: formData.username,
           lastname: formData.lastname,

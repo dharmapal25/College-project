@@ -37,7 +37,7 @@ const Signup = () => {
         }
 
         // axios.post('https://college-pro.onrender.com/auth/register', formData, {
-        axios.post('https://college-pro.onrender.com/auth/register', formData, {
+        axios.post('https://college-pro.onrender.com/api/auth/register', formData, {
             headers: {
                 'Content-Type': 'application/json'
             }

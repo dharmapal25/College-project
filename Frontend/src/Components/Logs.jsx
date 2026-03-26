@@ -12,7 +12,7 @@ const Logs = () => {
         setLoading(true)
         setError('')
         try {
-            const response = await axios.get('https://college-pro.onrender.com/enquiries/logs', {
+            const response = await axios.get('https://college-pro.onrender.com/api/logs/logs', {
                 withCredentials: true,
             })
             setLogs(response.data.logs || [])
@@ -29,7 +29,7 @@ const Logs = () => {
 
     const deleteLog = async (id) => {
         try {
-            await axios.delete(`https://college-pro.onrender.com/enquiries/logs/${id}`, {
+            await axios.delete(`https://college-pro.onrender.com/api/logs/logs/${id}`, {
                 withCredentials: true,
             })
             

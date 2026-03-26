@@ -28,7 +28,7 @@ const Officers_login = () => {
         setLoading(true);
         setError('');
 
-        axios.post('https://college-pro.onrender.com/auth/admin-login', formData, {
+        axios.post('https://college-pro.onrender.com/api/auth/admin-login', formData, {
             headers: {
                 'Content-Type': 'application/json'
             }

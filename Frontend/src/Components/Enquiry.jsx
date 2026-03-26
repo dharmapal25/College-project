@@ -39,8 +39,8 @@ const Enquiry = () => {
 
     try {
       const response = await axios.post(
-        'https://college-pro.onrender.com/user-enquiry',
-        // "http://localhost:3000/user-enquiry",
+        'https://college-pro.onrender.com/api/user-enquiry',
+        // "http://localhost:3000/api/user-enquiry",
         {
           email: formData.email,
           location: formData.location,

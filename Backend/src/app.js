@@ -39,8 +39,15 @@ app.get("/", (req, res) => {
     });
 });
 
-app.use("/auth", authRouters);
-app.use("/user-enquiry", enquiryRouter);
-app.use("/officers-team", require("./Routers/officers.router"));
-app.use("/enquiries", require("./Routers/logs.router"));
+// API Routes
+app.use("/api/auth", authRouters);
+app.use("/api/user-enquiry", enquiryRouter);
+app.use("/api/officers-team", require("./Routers/officers.router"));
+app.use("/api/logs", require("./Routers/logs.router"));
+
+// 404 handler
+app.use((req, res) => {
+    res.status(404).json({ error: "Route not found" });
+});
+
 module.exports = app
