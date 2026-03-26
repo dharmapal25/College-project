@@ -14,7 +14,7 @@ const userProblemSchema = new mongoose.Schema({
         type: String,
         required: [true, "Category is required"],
         enum: {
-            values: ["infrastructure", "academic", "hostel", "other"],
+            values: ["infrastructure", "water", "electricity", "sanitation", "revenue", "civil", "healthcare", "transportation", "parks", "building", "academic", "hostel", "other"],
             message: "Invalid category: {VALUE}"
         }
     },
@@ -30,7 +30,7 @@ const userProblemSchema = new mongoose.Schema({
         type: String,
         required: [true, "Description is required"],
         minlength: [10, "Description must be at least 10 characters"],
-        maxlength: [2000, "Description must be at most 2000 characters"],
+        maxlength: [5000, "Description must be at most 5000 characters"],
     },
 
     Emergency: {
@@ -40,7 +40,7 @@ const userProblemSchema = new mongoose.Schema({
 
     status: {
         type: String,
-        enum: ["pending", "progress", "closed", "completed"],
+        enum: ["pending", "in-progress", "resolved", "closed"],
         default: "pending"
     }
 
