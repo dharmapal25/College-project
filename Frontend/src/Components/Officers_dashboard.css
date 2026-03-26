@@ -217,8 +217,13 @@
   transition: opacity 0.3s;
 }
 
-.action-btn:hover {
+.action-btn:hover:not(:disabled) {
   opacity: 0.8;
+}
+
+.action-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .in-progress-btn {

@@ -217,4 +217,72 @@ const getEnquiriesByCategory = async (req, res) => {
   }
 };
 
-module.exports = { getUserLogs, deleteLog, getUserAllLogs, getAllEnquiriesAdmin, getEnquiriesByCategory };
+// Update Enquiry Status
+const updateEnquiryStatus = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    // Validation
+    if (!id) {
+      return res.status(400).json({
+        success: false,
+        message: "Enquiry ID is required"
+      });
+    }
+
+    if (!status) {
+      return res.status(400).json({
+        success: false,
+        message: "Status is required"
+      });
+    }
+
+    // Validate status value
+    const validStatuses = ["pending", "in-progress", "resolved", "closed"];
+    if (!validStatuses.includes(status)) {
+      return res.status(400).json({
+        success: false,
+        message: `Invalid status. Valid statuses: ${validStatuses.join(", ")}`
+      });
+    }
+
+    // Find and update enquiry
+    const updatedEnquiry = await userProblems.findByIdAndUpdate(
+      id,
+      { status: status },
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedEnquiry) {
+      return res.status(404).json({
+        success: false,
+        message: "Enquiry not found"
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: `Enquiry status updated to ${status}`,
+      enquiry: {
+        _id: updatedEnquiry._id,
+        id: updatedEnquiry._id,
+        email: updatedEnquiry.email,
+        category: updatedEnquiry.category,
+        location: updatedEnquiry.location,
+        description: updatedEnquiry.description,
+        Emergency: updatedEnquiry.Emergency,
+        status: updatedEnquiry.status,
+        createdAt: updatedEnquiry.createdAt
+      }
+    });
+  } catch (error) {
+    console.error("Update enquiry status error:", error.message);
+    res.status(500).json({
+      success: false,
+      message: "Failed to update enquiry status. Please try again later."
+    });
+  }
+};
+
+module.exports = { getUserLogs, deleteLog, getUserAllLogs, getAllEnquiriesAdmin, getEnquiriesByCategory, updateEnquiryStatus };

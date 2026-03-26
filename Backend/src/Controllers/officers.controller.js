@@ -22,6 +22,7 @@ const getOfficers = async (req, res) => {
   }
 };
 
+
 const addOfficer = async (req, res) => {
   try {
     const { username, lastname, email, password, phone, category } = req.body;

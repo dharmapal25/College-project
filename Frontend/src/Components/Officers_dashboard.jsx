@@ -68,6 +68,46 @@ const Officers_dashboard = () => {
     navigate('/officers-login')
   }
 
+  const updateEnquiryStatus = async (enquiryId, newStatus) => {
+    try {
+      const storedOfficerToken = localStorage.getItem('officerToken')
+      
+      const response = await axios.put(
+        `https://college-pro.onrender.com/api/logs/logs/${enquiryId}/status`,
+        { status: newStatus },
+        {
+          headers: {
+            'Authorization': `Bearer ${storedOfficerToken}`,
+            'Content-Type': 'application/json'
+          },
+          withCredentials: true
+        }
+      )
+
+      if (response.data.success) {
+        // Update local state
+        setEnquiries(prevEnquiries =>
+          prevEnquiries.map(enquiry =>
+            enquiry._id === enquiryId || enquiry.id === enquiryId
+              ? { ...enquiry, status: newStatus }
+              : enquiry
+          )
+        )
+      }
+    } catch (err) {
+      console.error('Error updating enquiry status:', err)
+      alert(err.response?.data?.message || 'Failed to update status')
+    }
+  }
+
+  const handleMarkInProgress = (enquiryId) => {
+    updateEnquiryStatus(enquiryId, 'in-progress')
+  }
+
+  const handleMarkResolved = (enquiryId) => {
+    updateEnquiryStatus(enquiryId, 'resolved')
+  }
+
   const getStatusColor = (status) => {
     switch (status) {
       case 'pending':
@@ -224,10 +264,18 @@ const Officers_dashboard = () => {
               </div>
 
               <div className='enquiry-actions'>
-                <button className='action-btn in-progress-btn'>
+                <button 
+                  className='action-btn in-progress-btn'
+                  onClick={() => handleMarkInProgress(enquiry._id || enquiry.id)}
+                  disabled={enquiry.status === 'in-progress' || enquiry.status === 'resolved'}
+                >
                   Mark In Progress
                 </button>
-                <button className='action-btn resolved-btn'>
+                <button 
+                  className='action-btn resolved-btn'
+                  onClick={() => handleMarkResolved(enquiry._id || enquiry.id)}
+                  disabled={enquiry.status === 'resolved'}
+                >
                   Mark Resolved
                 </button>
               </div>
