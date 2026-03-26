@@ -75,11 +75,10 @@ const Logs = () => {
                                     <span className="logs-label">Emergency:</span>
                                     <span className="logs-value">{String(log.Emergency || log.emergency || false)}</span>
                                 </div>
-                                <div className="logs-row">
-                                    <span className="logs-label">Status:</span>
+                                <div className="logs-row status-row">
                                     <span className={`status ${status}`}>{status}</span>
                                 </div>
-                                <button className="logs-delete" onClick={() => deleteLog(id)}>
+                                <button className="logs-delete delete-btn" onClick={() => deleteLog(id)}>
                                     Delete
                                 </button>
                             </div>
