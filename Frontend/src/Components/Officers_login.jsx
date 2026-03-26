@@ -28,7 +28,7 @@ const Officers_login = () => {
         setLoading(true);
         setError('');
 
-        axios.post('https://college-pro.onrender.com/auth/officers-login', formData, {
+        axios.post('https://college-pro.onrender.com/auth/admin-login', formData, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -37,11 +37,11 @@ const Officers_login = () => {
                 console.log('Admin Login successful:', response.data);
                 localStorage.setItem('adminToken', response.data.adminToken);
                 
-                if(officer.email === "admin") {
+                // if(officer.email === "admin") {
                     navigate('/admin-dashboard');
-                }else {
-                    navigate('/officers-dashboard');
-                }
+                // }else {
+                //     navigate('/officers-dashboard');
+                // }
             })
             .catch(error => {
                 console.error("Login Error:", error.response?.data || error.message);

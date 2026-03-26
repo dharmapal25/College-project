@@ -15,6 +15,7 @@ const Officers = () => {
     setLoading(true)
     setError('')
     try {
+      // const response = await axios.get('https://college-pro.onrender.com/officers-team/officers', { withCredentials: true })
       const response = await axios.get('https://college-pro.onrender.com/officers-team/officers', { withCredentials: true })
       setOfficers(response.data.officers || [])
     } catch (err) {
@@ -34,39 +35,39 @@ const Officers = () => {
   }
 
   return (
-   <>
-   <div className="officers-container">
+    <>
+      <div className="officers-container">
 
-   
-     <Navbar/>
-    <div className="officers-page">
-      <div className="officers-header">
-        <h1>Officers</h1>
-        <button onClick={ officersLogin } className="officers-login-button" >Login Officers</button>
-      </div>
 
-      {loading && <p className="officers-loading">Loading officers...</p>}
-      {error && <p className="officers-error">{error}</p>}
-
-      <div className="officers-grid">
-        {officers.map((officer) => (
-          <div key={officer.id} className="officer-card">
-            <img src={officer.image} alt={officer.email} className="officer-image" />
-            <div className="officer-data">
-              <p className="officer-name">{officer.name || officer.email}</p>
-              <p className="officer-email">{officer.email}</p>
-              <p className="officer-category">Category: {officer.category || 'officer'}</p>
-            </div>
+        <Navbar />
+        <div className="officers-page">
+          <div className="officers-header">
+            <h1>Officers</h1>
+            <button onClick={officersLogin} className="officers-login-button" >Login Officers</button>
           </div>
-        ))}
-      </div>
 
-      {!loading && !error && officers.length === 0 && (
-        <p className="officers-empty">No officers found.</p>
-      )}
-    </div>
-    </div>
-   </>
+          {loading && <p className="officers-loading">Loading officers...</p>}
+          {error && <p className="officers-error">{error}</p>}
+
+          <div className="officers-grid">
+            {officers.map((officer) => (
+              <div key={officer.id} className="officer-card">
+                <img src={officer.image} alt={officer.email} className="officer-image" />
+                <div className="officer-data">
+                  <p className="officer-name">{officer.name || officer.email}</p>
+                  <p className="officer-email">{officer.email}</p>
+                  <p className="officer-category">Category: {officer.category || 'officer'}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {!loading && !error && officers.length === 0 && (
+            <p className="officers-empty">No officers found.</p>
+          )}
+        </div>
+      </div>
+    </>
   )
 }
 
