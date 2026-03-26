@@ -294,13 +294,18 @@ const officerLogin = async (req, res) => {
             });
         }
 
-        // Generate officer token
+        // Check if this is admin account
+        const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "admin@college.com";
+        const isAdmin = officer.email.toLowerCase() === ADMIN_EMAIL.toLowerCase();
+
+        // Generate officer token with admin flag if applicable
         const token = jwt.sign(
             { 
                 id: officer._id, 
                 email: officer.email,
                 category: officer.category,
-                isOfficer: true 
+                isOfficer: true,
+                isAdmin: isAdmin  // Add admin flag to token
             },
             process.env.JWT_SECRET || "default_secret_key",
             { expiresIn: "7d" }
@@ -319,6 +324,8 @@ const officerLogin = async (req, res) => {
             success: true,
             message: "Officer login successful",
             token,
+            isAdmin: isAdmin,  // Send flag to frontend for redirect
+            redirectTo: isAdmin ? "/admin-dashboard" : "/officers-dashboard",
             officer: {
                 id: officer._id,
                 email: officer.email,
