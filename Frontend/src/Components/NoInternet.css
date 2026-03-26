@@ -1,0 +1,142 @@
+.no-internet-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #00ff00 0%, #00cc00 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  font-family: 'Arial', sans-serif;
+}
+
+.no-internet-content {
+  text-align: center;
+  animation: slideUp 0.5s ease-out;
+}
+
+.wifi-icon {
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: center;
+  animation: float 3s ease-in-out infinite;
+}
+
+.wifi-icon svg {
+  stroke: #000;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
+.no-internet-title {
+  font-size: 48px;
+  font-weight: 900;
+  color: #000;
+  margin: 0;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  line-height: 1.2;
+}
+
+.no-internet-subtitle {
+  font-size: 18px;
+  color: #1a1a1a;
+  margin: 20px 0 40px 0;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.retry-button {
+  background: #000;
+  color: #00ff00;
+  border: 3px solid #000;
+  padding: 15px 40px;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.retry-button:hover {
+  background: #1a1a1a;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.retry-button:active {
+  transform: translateY(0);
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .no-internet-title {
+    font-size: 36px;
+  }
+
+  .no-internet-subtitle {
+    font-size: 16px;
+  }
+
+  .retry-button {
+    padding: 12px 30px;
+    font-size: 16px;
+  }
+
+  .wifi-icon {
+    margin-bottom: 20px;
+  }
+
+  .wifi-icon svg {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+@media (max-width: 480px) {
+  .no-internet-title {
+    font-size: 28px;
+  }
+
+  .no-internet-subtitle {
+    font-size: 14px;
+  }
+
+  .retry-button {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+
+  .wifi-icon {
+    margin-bottom: 15px;
+  }
+
+  .wifi-icon svg {
+    width: 70px;
+    height: 70px;
+  }
+}

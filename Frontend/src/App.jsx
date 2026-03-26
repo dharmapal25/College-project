@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Login from './Components/Login'
 import Signup from './Components/Signup'
 import Officers_login from './Components/Officers_login'
@@ -11,8 +11,28 @@ import Home from './Components/Home'
 import Enquiry from './Components/Enquiry'
 import Officers from './Components/Officers'
 import Logs from './Components/Logs'
+import NoInternet from './Components/NoInternet'
 
 const App = () => {
+  const [isOnline, setIsOnline] = useState(navigator.onLine)
+
+  useEffect(() => {
+    const handleOnline = () => setIsOnline(true)
+    const handleOffline = () => setIsOnline(false)
+
+    window.addEventListener('online', handleOnline)
+    window.addEventListener('offline', handleOffline)
+
+    return () => {
+      window.removeEventListener('online', handleOnline)
+      window.removeEventListener('offline', handleOffline)
+    }
+  }, [])
+
+  if (!isOnline) {
+    return <NoInternet />
+  }
+
   return (
     <div>
       <BrowserRouter>

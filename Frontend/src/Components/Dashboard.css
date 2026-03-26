@@ -303,6 +303,127 @@ body, html {
   margin: 0;
 }
 
+/* ===== Complaints List ===== */
+.complaints-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.complaint-item {
+  background: var(--bg-light);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  border-left: 4px solid var(--primary-color);
+  transition: var(--transition);
+}
+
+.complaint-item:hover {
+  background: #f0f4ff;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.1);
+}
+
+.complaint-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-sm);
+}
+
+.complaint-category {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: var(--font-size-base);
+}
+
+.complaint-status {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.status-pending {
+  background: #fed7d7;
+  color: #c53030;
+}
+
+.status-in-progress {
+  background: #bee3f8;
+  color: #2c5aa0;
+}
+
+.status-resolved {
+  background: #c6f6d5;
+  color: #22543d;
+}
+
+.complaint-location {
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  margin: 0.5rem 0;
+  font-weight: 500;
+}
+
+.complaint-date {
+  color: var(--text-light);
+  font-size: var(--font-size-sm);
+  margin: 0;
+}
+
+/* ===== Progress Bar Container ===== */
+.progress-bar-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.progress-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.progress-item label {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: var(--font-size-base);
+}
+
+.progress-bar {
+  background: var(--bg-light);
+  border-radius: 10px;
+  height: 24px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.3s ease;
+}
+
+.progress-fill.resolved {
+  background: linear-gradient(90deg, #48bb78, #38a169);
+}
+
+.progress-fill.in-progress {
+  background: linear-gradient(90deg, #4299e1, #2d82b8);
+}
+
+.progress-fill.pending {
+  background: linear-gradient(90deg, #f6ad55, #ed8936);
+}
+
+.progress-text {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
 /* ===== Responsive Design - Tablet (768px) ===== */
 @media (max-width: 1024px) {
   .stats-user-div {
