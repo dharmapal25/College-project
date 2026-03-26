@@ -28,40 +28,52 @@ const Officers_login = () => {
         setLoading(true);
         setError('');
 
-        // Call officers-login endpoint instead of admin-login
-        axios.post('https://college-pro.onrender.com/api/auth/officers-login', formData, {
+        // Check if this is admin login (admin@college.com)
+        const isAdminEmail = formData.email.toLowerCase() === 'admin@college.com';
+        
+        // Choose endpoint based on email
+        const endpoint = isAdminEmail 
+            ? 'https://college-pro.onrender.com/api/auth/admin-login'
+            : 'https://college-pro.onrender.com/api/auth/officers-login';
+
+        axios.post(endpoint, formData, {
             headers: {
                 'Content-Type': 'application/json'
             }
         })
             .then(response => {
-                console.log('Officer Login successful:', response.data);
+                console.log('Login successful:', response.data);
                 
-                // Store token
-                localStorage.setItem('officerToken', response.data.token);
-                localStorage.setItem('officerEmail', response.data.officer.email);
-                localStorage.setItem('officerName', response.data.officer.username);
-                
-                // Store full officer data for dashboard
-                localStorage.setItem('officerData', JSON.stringify({
-                    id: response.data.officer.id,
-                    email: response.data.officer.email,
-                    username: response.data.officer.username,
-                    lastname: response.data.officer.lastname,
-                    category: response.data.officer.category
-                }));
-                
-                // Redirect based on isAdmin flag
-                if (response.data.isAdmin) {
-                    // Admin officer - redirect to admin dashboard
-                    navigate('/admin-dashboard', { 
-                        state: { officer: response.data.officer } 
-                    });
+                if (isAdminEmail) {
+                    // Admin Login
+                    localStorage.setItem('adminToken', response.data.adminToken);
+                    localStorage.setItem('adminEmail', formData.email);
+                    navigate('/admin-dashboard');
                 } else {
-                    // Regular officer - redirect to officers dashboard
-                    navigate('/officers-dashboard', { 
-                        state: { officer: response.data.officer } 
-                    });
+                    // Officer Login
+                    localStorage.setItem('officerToken', response.data.token);
+                    localStorage.setItem('officerEmail', response.data.officer.email);
+                    localStorage.setItem('officerName', response.data.officer.username);
+                    
+                    // Store full officer data for dashboard
+                    localStorage.setItem('officerData', JSON.stringify({
+                        id: response.data.officer.id,
+                        email: response.data.officer.email,
+                        username: response.data.officer.username,
+                        lastname: response.data.officer.lastname,
+                        category: response.data.officer.category
+                    }));
+                    
+                    // Redirect based on isAdmin flag (officer with admin email)
+                    if (response.data.isAdmin) {
+                        navigate('/admin-dashboard', { 
+                            state: { officer: response.data.officer } 
+                        });
+                    } else {
+                        navigate('/officers-dashboard', { 
+                            state: { officer: response.data.officer } 
+                        });
+                    }
                 }
             })
             .catch(error => {
