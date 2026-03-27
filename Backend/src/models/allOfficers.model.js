@@ -37,7 +37,8 @@ const officerSchema = new mongoose.Schema({
         type: String,
         required: [true, "Category is required"],
         enum: {
-            values: ["infrastructure", "academic", "hostel", "other"],
+            values: ["Infrastructure & Public Works", "Water & Sanitation", "Elecitricity & Power Supply", "Health & Public Safety", "Transportation & Traffic", "Education & Social Welfare", "Environment & Pollution", "Other"],
+
             message: "Invalid category: {VALUE}"
         }
     },
