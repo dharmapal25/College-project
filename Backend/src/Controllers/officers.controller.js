@@ -12,8 +12,9 @@ const getOfficers = async (req, res) => {
       email: officer.email,
       category: officer.category || "other",
       name: officer.username || "Officer",
-      image: `https://i.pravatar.cc/150?u=${encodeURIComponent(officer.email)}`,
+      image: officer.image || `https://i.pravatar.cc/150?u=${encodeURIComponent(officer.email)}`,
       phone: officer.Phone,
+      role: "officer",
     }));
 
     res.status(200).json({ officers: formatted });
@@ -25,7 +26,7 @@ const getOfficers = async (req, res) => {
 
 const addOfficer = async (req, res) => {
   try {
-    const { username, email, password, phone, category } = req.body;
+    const { username, email, password, phone, category, image } = req.body;
 
     // Validation
     if (!username || !email || !password || !phone || !category) {
@@ -59,7 +60,8 @@ const addOfficer = async (req, res) => {
       email,
       password: hashedPassword,
       Phone: phone,
-      category
+      category,
+      image: image || null
     });
 
     res.status(201).json({
@@ -69,7 +71,8 @@ const addOfficer = async (req, res) => {
         email: newOfficer.email,
         name: newOfficer.username,
         category: newOfficer.category,
-        phone: newOfficer.Phone
+        phone: newOfficer.Phone,
+        image: newOfficer.image
       }
     });
   } catch (error) {

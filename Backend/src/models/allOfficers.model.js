@@ -41,6 +41,12 @@ const officerSchema = new mongoose.Schema({
             message: "Invalid category: {VALUE}"
         }
     },
+
+    image: {
+        type: String,
+        default: null,
+        trim: true
+    }
 },
     {
         timestamps: true,

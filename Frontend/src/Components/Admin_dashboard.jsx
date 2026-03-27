@@ -14,7 +14,8 @@ const Admin_dashboard = () => {
     email: '',
     password: '',
     phone: '',
-    category: 'infrastructure'
+    category: 'infrastructure',
+    image: ''
   });
   const [formStatus, setFormStatus] = useState({ message: '', type: '' });
   const [loading, setLoading] = useState(false);
@@ -87,7 +88,8 @@ const Admin_dashboard = () => {
           email: formData.email,
           password: formData.password,
           phone: formData.phone,
-          category: formData.category
+          category: formData.category,
+          image: formData.image || null
         },
         { withCredentials: true }
       );
@@ -103,7 +105,8 @@ const Admin_dashboard = () => {
         email: '',
         password: '',
         phone: '',
-        category: 'infrastructure'
+        category: 'infrastructure',
+        image: ''
       });
 
       // Reload officers
@@ -209,12 +212,12 @@ const Admin_dashboard = () => {
                     </thead>
                     <tbody>
                       {enquiries.map((e, index) => (
-                        
+
                         <tr key={index}>
                           <td>📃</td>
                           <td>{e.email}</td>
                           <td>{e.location}</td>
-                          
+
                           <td>
                             <span
                               className='admin-status-badge'
@@ -291,11 +294,27 @@ const Admin_dashboard = () => {
                       onChange={handleFormChange}
                       required
                     >
-                      <option value='infrastructure'>Infrastructure</option>
-                      <option value='academic'>Academic</option>
-                      <option value='hostel'>Hostel</option>
+                      <option value="">select category</option>
+                      <option value='infrastructure'>Infrastructure & Public Works</option>
+                      <option value='water'>Water & Sanitation</option>
+                      <option value='electricity'>Electricity & Power Supply</option>
+                      <option value='health'>Health & Public Safety</option>
+                      <option value='transportation'>Transportation & Traffic</option>
+                      <option value='education'>Education & Social Welfare</option>
+                      <option value='environment'>Environment & Pollution</option>
                       <option value='other'>Other</option>
                     </select>
+                  </div>
+
+                  <div className='admin-form-group'>
+                    <label>Profile Image URL</label>
+                    <input
+                      type='url'
+                      name='image'
+                      value={formData.image}
+                      onChange={handleFormChange}
+                      placeholder='Enter image URL (optional)'
+                    />
                   </div>
 
                   {formStatus.message && (
