@@ -7,13 +7,13 @@ const AllOfficers = require("../models/allOfficers.model");
 // Register User
 const register = async (req, res) => {
     try {
-        const { username, lastname, email, password } = req.body;
+        const { username, email, password } = req.body;
 
         // Validation - Check empty fields
-        if (!username || !email || !password || !lastname) {
+        if (!username || !email || !password) {
             return res.status(400).json({ 
                 success: false, 
-                message: "All fields are required: username, lastname, email, password" 
+                message: "All fields are required: username, email, password" 
             });
         }
 
@@ -34,11 +34,11 @@ const register = async (req, res) => {
             });
         }
 
-        // Validate names length
-        if (username.length < 3 || lastname.length < 3) {
+        // Validate username length
+        if (username.length < 3) {
             return res.status(400).json({ 
                 success: false, 
-                message: "Username and lastname must be at least 3 characters long" 
+                message: "Username must be at least 3 characters long" 
             });
         }
 
@@ -58,7 +58,6 @@ const register = async (req, res) => {
         // Create new user in MongoDB
         const user = await usersInfo.create({
             username: username.trim(),
-            lastname: lastname.trim(),
             email: email.toLowerCase().trim(),
             password: hashedPassword,
         });
@@ -70,8 +69,7 @@ const register = async (req, res) => {
             user: { 
                 id: user._id, 
                 email: user.email,
-                username: user.username,
-                lastname: user.lastname
+                username: user.username
             } 
         });
     } catch (error) {
@@ -170,7 +168,6 @@ const login = async (req, res) => {
                 id: user._id, 
                 email: user.email,
                 username: user.username,
-                lastname: user.lastname,
                 role: user.role
             } 
         });
@@ -330,7 +327,6 @@ const officerLogin = async (req, res) => {
                 id: officer._id,
                 email: officer.email,
                 username: officer.username,
-                lastname: officer.lastname,
                 category: officer.category,
             }
         });

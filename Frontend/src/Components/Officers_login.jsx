@@ -60,7 +60,6 @@ const Officers_login = () => {
                         id: response.data.officer.id,
                         email: response.data.officer.email,
                         username: response.data.officer.username,
-                        lastname: response.data.officer.lastname,
                         category: response.data.officer.category
                     }));
                     

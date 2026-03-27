@@ -10,13 +10,6 @@ const officerSchema = new mongoose.Schema({
         trim: true,
     },
 
-    lastname: {
-        type: String,
-        required: [true, "Last name is required"],
-        minlength: [3, "Last name must be at least 3 characters"],
-        trim: true,
-    },
-
     email: {
         type: String,
         required: [true, "Email is required"],

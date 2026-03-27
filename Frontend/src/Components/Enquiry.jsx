@@ -119,11 +119,17 @@ const Enquiry = () => {
               onChange={handleChange}
               required
             >
+
               <option value="">Select Category</option>
-              <option value="infrastructure">Infrastructure</option>
-              <option value="academic">Academic</option>
-              <option value="hostel">Hostel</option>
-              <option value="other">Other</option>
+              {/* "Infrastructure & Public Works", "Water & Sanitation", "Elecitricity & Power Supply", "Health & Public Safety", "Transportation & Traffic", "Education & Social Welfare", "Environment & Pollution", "Other" */}
+              <option value="Infrastructure & Public Works">Infrastructure & Public Works</option>
+              <option value="Water & Sanitation">Water & Sanitation</option>
+              <option value="Elecitricity & Power Supply">Elecitricity & Power Supply</option>
+              <option value="Health & Public Safety">Health & Public Safety</option>
+              <option value="Transportation & Traffic">Transportation & Traffic</option>
+              <option value="Education & Social Welfare">Education & Social Welfare</option>
+              <option value="Environment & Pollution">Environment & Pollution</option>
+              <option value="Other">Other</option>
             </select>
           </label>
 

@@ -11,7 +11,6 @@ const Admin_dashboard = () => {
   const [adminToken, setAdminToken] = useState(null);
   const [formData, setFormData] = useState({
     username: '',
-    lastname: '',
     email: '',
     password: '',
     phone: '',
@@ -85,7 +84,6 @@ const Admin_dashboard = () => {
         'https://college-pro.onrender.com/api/officers-team/add-officer',
         {
           username: formData.username,
-          lastname: formData.lastname,
           email: formData.email,
           password: formData.password,
           phone: formData.phone,
@@ -102,7 +100,6 @@ const Admin_dashboard = () => {
       // Reset form
       setFormData({
         username: '',
-        lastname: '',
         email: '',
         password: '',
         phone: '',
@@ -242,18 +239,6 @@ const Admin_dashboard = () => {
                       value={formData.username}
                       onChange={handleFormChange}
                       placeholder='Enter first name'
-                      required
-                    />
-                  </div>
-
-                  <div className='admin-form-group'>
-                    <label>Last Name *</label>
-                    <input
-                      type='text'
-                      name='lastname'
-                      value={formData.lastname}
-                      onChange={handleFormChange}
-                      placeholder='Enter last name'
                       required
                     />
                   </div>

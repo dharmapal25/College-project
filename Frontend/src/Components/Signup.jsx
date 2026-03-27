@@ -10,7 +10,6 @@ const Signup = () => {
 
     const [formData, setFormData] = useState({
         username: '',
-        lastname: '',
         email: '',
         password: ''
     })
@@ -31,7 +30,7 @@ const Signup = () => {
         setError('')
         setLoading(true)
 
-        if (!formData.username || !formData.lastname || !formData.email || !formData.password) {
+        if (!formData.username || !formData.email || !formData.password) {
             setError('Please fill in all fields')
             setLoading(false)
             return
@@ -91,20 +90,6 @@ const Signup = () => {
                                 value={formData.username}
                                 onChange={handleChange}
                                 placeholder='Enter your username'
-                                required
-                            />
-                        </div>
-
-                        {/* Last Name */}
-                        <div className='form-group'>
-                            <label htmlFor='lastname'>Last Name</label>
-                            <input
-                                type='text'
-                                id='lastname'
-                                name='lastname'
-                                value={formData.lastname}
-                                onChange={handleChange}
-                                placeholder='Enter your last name'
                                 required
                             />
                         </div>

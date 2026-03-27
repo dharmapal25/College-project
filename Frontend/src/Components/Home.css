@@ -1,0 +1,516 @@
+:root {
+  --navy-dark: #0a1f4e;
+  --navy-mid: #0d2b6e;
+  --navy-main: #163a8a;
+  --navy-hero: #163580;
+  --gold: #e8b84b;
+  --gold-light: #f5d07a;
+  --white: #ffffff;
+  --teal: #1d9e75;
+  --saffron: #FF9933;
+  --green-india: #138808;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.home-wrapper {
+  font-family: 'Segoe UI', 'Noto Sans', sans-serif;
+  background: var(--navy-dark);
+  overflow: hidden;
+}
+
+/* ── Tricolor Strip ── */
+.tricolor-strip {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.strip {
+  height: 6px;
+  width: 100%;
+}
+
+.strip.saffron { background: var(--saffron); }
+.strip.white   { background: rgba(255, 255, 255, 0.92); }
+.strip.green   { background: var(--green-india); }
+
+/* ── Hero Banner ── */
+.hero-banner {
+  position: relative;
+  height: 97.3vh;
+  background: #264588d6;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding: 40px 32px 0;
+}
+
+/* ── Star Field (SVG overlay) ── */
+.star-field {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Logo Container ── */
+.logo-container {
+  position: absolute;
+  top: 20px;
+  left: 32px;
+  z-index: 15;
+  width: 130px;
+  height: 130px;
+}
+
+.logo-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+/* ── Login Button (Top Right) ── */
+.login-btn-top {
+  position: absolute;
+  top: 20px;
+  right: 32px;
+  z-index: 15;
+  background: rgba(232, 184, 75, 0.9);
+  color: var(--navy-dark);
+  border: none;
+  padding: 10px 28px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  box-shadow: 0 2px 8px rgba(232, 184, 75, 0.3);
+}
+
+.login-btn-top:hover {
+  background: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(232, 184, 75, 0.4);
+}
+
+.login-btn-top:active {
+  transform: translateY(0);
+}
+
+/* ── Ashoka Chakra watermark ── */
+.chakra-watermark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 180px;
+  height: 180px;
+  opacity: 0.07;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── Parliament silhouette ── */
+.parliament-wrap {
+  position: absolute;
+  bottom: 38px;
+  left: 60px;
+  width: 220px;
+  opacity: 0.85;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.parliament-svg {
+  width: 100%;
+  height: auto;
+}
+
+/* ── Digital grid ── */
+.grid-wrap {
+  position: absolute;
+  top: 20px;
+  right: 0;
+  width: 310px;
+  height: 280px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.grid-lines {
+  width: 100%;
+  height: 100%;
+}
+
+/* ── Sun glow ── */
+.sun-glow {
+  position: absolute;
+  top: 10px;
+  right: 60px;
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: var(--gold);
+  opacity: 0.12;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.sun-glow::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--gold-light);
+  opacity: 0.6;
+}
+
+/* ── Left: Hero Text Content ── */
+.hero-content {
+  position: relative;
+  z-index: 10;
+  max-width: 420px;
+  flex-shrink: 0;
+}
+
+.hero-badge {
+  display: inline-block;
+  background: rgba(232, 184, 75, 0.18);
+  border: 1px solid rgba(232, 184, 75, 0.5);
+  border-radius: 20px;
+  padding: 4px 14px;
+  margin-bottom: 14px;
+}
+
+.hero-badge span {
+  font-size: 10px;
+  color: var(--gold);
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.hero-heading {
+  font-size: 42px;
+  font-weight: 800;
+  color: var(--white);
+  line-height: 1.2;
+  letter-spacing: 0.3px;
+  margin-bottom: 10px;
+}
+
+.brand-name {
+  color: var(--gold);
+  font-size: 48px;
+  letter-spacing: 1px;
+  display: block;
+}
+
+.hero-hindi {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 1.5px;
+  margin-bottom: 12px;
+}
+
+.hero-divider {
+  width: 60px;
+  height: 3px;
+  background: var(--gold);
+  border-radius: 2px;
+  margin-bottom: 14px;
+}
+
+.hero-tagline {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.7;
+  margin-bottom: 22px;
+}
+
+/* ── CTA Buttons ── */
+.hero-buttons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+}
+
+.btn-gold {
+  background: var(--gold);
+  color: var(--navy-dark);
+  border: none;
+  padding: 12px 28px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.15s;
+  font-family: inherit;
+}
+
+.btn-gold:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--white);
+  border: 1.2px solid rgba(255, 255, 255, 0.45);
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  font-family: inherit;
+}
+
+.btn-outline:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-1px);
+}
+
+/* ── Stat Pills ── */
+.stat-pills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.pill {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--gold);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 14px;
+  border-radius: 20px;
+  letter-spacing: 0.3px;
+}
+
+/* ── Right: People Group ── */
+.people-group {
+  position: absolute;
+  right: 40px;
+  bottom: 38px;
+  display: flex;
+  align-items: flex-end;
+  gap: 0;
+  z-index: 8;
+}
+
+.person {
+  display: flex;
+  align-items: flex-end;
+}
+
+.person-left {
+  width: 72px;
+  z-index: 7;
+  margin-right: -12px;
+}
+
+.person-center {
+  width: 90px;
+  z-index: 9;
+}
+
+.person-right {
+  width: 72px;
+  z-index: 7;
+  margin-left: -12px;
+}
+
+.person svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ── Ground Strip ── */
+.ground-strip {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 33px;
+  background: var(--navy-dark);
+  border-top: 2px solid rgba(232, 184, 75, 0.4);
+  z-index: 5;
+}
+
+/* ── Made in India footer text ── */
+.made-in-india {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.28);
+  letter-spacing: 1px;
+  z-index: 10;
+  white-space: nowrap;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .hero-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 80px 20px 80px;
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .logo-container {
+    top: 16px;
+    left: 16px;
+    width: 105px;
+    height: 105px;
+  }
+
+  .login-btn-top {
+    top: 16px;
+    right: 20px;
+    padding: 9px 24px;
+    font-size: 14px;
+  }
+
+  .hero-heading {
+    font-size: 32px;
+  }
+
+  .brand-name {
+    font-size: 38px;
+  }
+
+  .hero-badge span {
+    font-size: 11px;
+  }
+
+  .hero-hindi {
+    font-size: 14px;
+  }
+
+  .hero-tagline {
+    font-size: 14px;
+  }
+
+  .btn-gold {
+    font-size: 14px;
+    padding: 11px 26px;
+  }
+
+  .people-group {
+    right: 10px;
+    bottom: 40px;
+  }
+
+  .person-center { width: 70px; }
+  .person-left   { width: 55px; }
+  .person-right  { width: 55px; }
+
+  .parliament-wrap {
+    width: 140px;
+    left: 10px;
+  }
+
+  .grid-wrap {
+    width: 200px;
+  }
+
+  .stat-pills {
+    gap: 6px;
+  }
+
+  .pill {
+    font-size: 10px;
+    padding: 3px 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-banner {
+    padding: 70px 16px 70px;
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .logo-container {
+    top: 12px;
+    left: 12px;
+    width: 85px;
+    height: 85px;
+  }
+
+  .login-btn-top {
+    top: 12px;
+    right: 12px;
+    padding: 8px 20px;
+    font-size: 13px;
+  }
+
+  .hero-heading {
+    font-size: 26px;
+  }
+
+  .brand-name {
+    font-size: 32px;
+  }
+
+  .hero-badge span {
+    font-size: 10px;
+  }
+
+  .hero-hindi {
+    font-size: 13px;
+  }
+
+  .hero-tagline {
+    font-size: 13px;
+  }
+
+  .btn-gold {
+    font-size: 14px;
+    padding: 11px 24px;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .btn-gold,
+  .btn-outline {
+    width: 100%;
+    text-align: center;
+  }
+
+  .people-group {
+    display: none;
+  }
+
+  .parliament-wrap {
+    width: 100px;
+    bottom: 30px;
+    left: 5px;
+  }
+
+  .grid-wrap {
+    width: 150px;
+  }
+}

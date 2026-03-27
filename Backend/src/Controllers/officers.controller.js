@@ -11,7 +11,7 @@ const getOfficers = async (req, res) => {
       id: officer._id,
       email: officer.email,
       category: officer.category || "other",
-      name: officer.username ? `${officer.username} ${officer.lastname}`.trim() : "Officer",
+      name: officer.username || "Officer",
       image: `https://i.pravatar.cc/150?u=${encodeURIComponent(officer.email)}`,
       phone: officer.Phone,
     }));
@@ -25,10 +25,10 @@ const getOfficers = async (req, res) => {
 
 const addOfficer = async (req, res) => {
   try {
-    const { username, lastname, email, password, phone, category } = req.body;
+    const { username, email, password, phone, category } = req.body;
 
     // Validation
-    if (!username || !lastname || !email || !password || !phone || !category) {
+    if (!username || !email || !password || !phone || !category) {
       return res.status(400).json({
         message: "All fields are required"
       });
@@ -56,7 +56,6 @@ const addOfficer = async (req, res) => {
     // Create new officer
     const newOfficer = await AllOfficers.create({
       username,
-      lastname,
       email,
       password: hashedPassword,
       Phone: phone,
@@ -68,7 +67,7 @@ const addOfficer = async (req, res) => {
       officer: {
         id: newOfficer._id,
         email: newOfficer.email,
-        name: `${newOfficer.username} ${newOfficer.lastname}`,
+        name: newOfficer.username,
         category: newOfficer.category,
         phone: newOfficer.Phone
       }
