@@ -88,6 +88,7 @@ const Officers_login = () => {
 
     return (
         <div className='officers-login-container'>
+            <title>Officers Login</title>
             <div className='officers-login-wrapper'>
                 <div className='officers-login-card'>
                     {/* Header */}

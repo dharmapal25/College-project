@@ -35,6 +35,7 @@ const Officers = () => {
 
   return (
     <div className="officers-main-container">
+      <title>Officers</title>
       <Navbar />
       <div className="officers-page">
         <div className="officers-header">

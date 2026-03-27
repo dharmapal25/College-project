@@ -41,6 +41,7 @@ const Logs = () => {
 
     return (
         <div className="logs-main-container">
+                <title>My Enquiries</title>
             <Navbar />
             <div className="logs-page">
                 <div className="logs-header">

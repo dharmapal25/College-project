@@ -62,6 +62,7 @@ const All_enquiries = () => {
 
   return (
     <div className="all-enquiries">
+      <title>All Enquiries</title>
       <div className="all-enquiries__header">
         <h2 className="all-enquiries__title">All Enquiries</h2>
 

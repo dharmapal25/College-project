@@ -44,22 +44,23 @@
 .officers-login-button {
   border: none;
   cursor: pointer;
-  color: #000;
-  padding: 0.7rem 1.5rem;
+  color: var(--text-primary);
+  padding: 12px 28px;
   border-radius: 8px;
-  font-size: 0.95rem;
-  transition: var(--transition);
-  background: #F9E0B9;
-  font-weight: 500;
+  font-size: 15px;
+  transition: all 0.3s ease;
+  background: rgba(232, 184, 75, 0.9);
+  font-weight: 700;
   white-space: nowrap;
   overflow: hidden;
-  padding: 5px 10px;
-  width:30%;
+  box-shadow: 0 2px 8px rgba(232, 184, 75, 0.3);
+  width: auto;
 }
 
 .officers-login-button:hover {
-  background: #f5d497;
+  background: #e8b84b;
   transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(232, 184, 75, 0.4);
 }
 
 .officers-grid {

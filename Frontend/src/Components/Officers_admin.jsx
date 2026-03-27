@@ -45,6 +45,7 @@ const OfficerCard = ({ officer }) => {
 
   return (
     <div className="officer-card">
+      <title>Officer Details</title>
       <div className="officer-card__header">
         <div className="officer-card__avatar">
           {officer.username.charAt(0)}

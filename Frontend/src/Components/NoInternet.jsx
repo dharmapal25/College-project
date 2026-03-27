@@ -4,6 +4,7 @@ import './NoInternet.css'
 const NoInternet = () => {
   return (
     <div className='no-internet-container'>
+      <title>No Internet Connection</title>
       <div className='no-internet-content'>
         <div className='wifi-icon'>
           <svg

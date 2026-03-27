@@ -72,6 +72,7 @@ const Login = () => {
 
     return (
         <div className='login-page'>
+            <title>Login</title>
             <div className='login-container'>
                 <div className='login-card'>
 

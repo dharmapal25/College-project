@@ -62,6 +62,7 @@ const Signup = () => {
 
     return (
         <div className='signup-page'>
+                <title>Sign Up</title>
             <div className='signup-container'>
                 <div className='signup-card'>
 

@@ -132,6 +132,19 @@ html {
   width: 100%;
 }
 
+.logo-image {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+  border-bottom: 2px solid rgba(83, 127, 134, 0.486);
+}
+
+.logo-image:hover {
+  transform: scale(1.05);
+}
+
 .logo h1 {
   font-size: var(--font-size-3xl);
   font-weight: bold;
@@ -509,6 +522,12 @@ html {
 
   .logo {
     flex: 1;
+    justify-content: flex-start;
+  }
+
+  .logo-image {
+    width: 65px;
+    height: 65px;
   }
 
   .logo h1 {
@@ -610,6 +629,7 @@ html {
     flex-direction: row;
     padding: var(--spacing-sm);
     justify-content: space-between;
+    background-color: #aab4b2 !important;
   }
 
   .hamburger-menu {
@@ -633,6 +653,12 @@ html {
 
   .logo {
     flex: 1;
+    justify-content: flex-start;
+  }
+
+  .logo-image {
+    width: 55px !important;
+    height: 55px !important;
   }
 
   .logo h1 {
@@ -642,6 +668,7 @@ html {
   .navigator-routes {
     top: 60px;
     padding: var(--spacing-sm);
+    background: #B5C0BE;
   }
 
   .nav-link {

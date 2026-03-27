@@ -78,6 +78,7 @@ const Enquiry = () => {
 
   return (
     <div className="enquiry-page">
+      <title>Enquiry Form</title>
       <Navbar />
       <main className="enquiry-container">
         <h1>Enquiry Form</h1>

@@ -150,6 +150,7 @@ const Officers_dashboard = () => {
 
   return (
     <div className='officers-dashboard-main-container'>
+      <title>Officers Dashboard</title>
       <Navbar />
       <div className='officers-dashboard-container'>
       {/* Header */}

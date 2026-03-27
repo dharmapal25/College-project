@@ -89,7 +89,7 @@ const Dashboard = () => {
   return (
     <>
       <div className="main-all-div-container">
-
+        <title>Dashboard</title>
         <Navbar />
 
         <div className="dashboard-container">

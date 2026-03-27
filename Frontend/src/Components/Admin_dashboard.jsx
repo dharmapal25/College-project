@@ -128,10 +128,12 @@ const Admin_dashboard = () => {
   return (
     <div className='admin-dashboard'>
       {/* Navigation Bar */}
+      <title>Admin Dashboard</title>
       <nav className='admin-navbar'>
         <div className='admin-nav-container'>
           <div className='admin-logo'>
-            <h1>College Pro Admin</h1>
+            <img src="https://ik.imagekit.io/cblndrocc/webp.webp" alt="Citizen Sathi Logo" className="admin-logo-image" />
+            <h1>Admin Dashboard</h1>
           </div>
           <button className='admin-logout-btn' onClick={handleLogout}>Logout</button>
         </div>

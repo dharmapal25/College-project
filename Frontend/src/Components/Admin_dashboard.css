@@ -32,9 +32,27 @@
   align-items: center;
 }
 
+.admin-logo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.admin-logo-image {
+  width: clamp(50px, 8vw, 80px);
+  height: clamp(50px, 8vw, 80px);
+  object-fit: contain;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.admin-logo-image:hover {
+  transform: scale(1.05);
+}
+
 .admin-logo h1 {
   color: white;
-  font-size: 1.6rem;
+  font-size: clamp(1.3rem, 4vw, 1.6rem);
   font-weight: 700;
 }
 

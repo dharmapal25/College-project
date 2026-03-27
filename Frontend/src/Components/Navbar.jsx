@@ -21,7 +21,7 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="nav-container">
         <div className="logo">
-          <h1 style={{ background : "#3d8b86b0", padding : "1vw", width: "100%", textAlign: "center",borderRadius: "10px" }} >Citizen Sathi</h1>
+          <img src={"https://ik.imagekit.io/cblndrocc/webp.webp"} alt="Citizen Sathi Logo" className="logo-image" />
         </div>
 
         <button className="hamburger-menu" onClick={toggleMobileMenu}>
