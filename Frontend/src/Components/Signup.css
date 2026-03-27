@@ -16,7 +16,8 @@
 /* ===== Signup Page ===== */
 .signup-page {
   min-height: 100vh;
-  background: linear-gradient(135deg, #0a0e1a 0%, #0f1419 100%);
+  /* background: linear-gradient(135deg, #0a0e1a 0%, #0f1419 100%); */
+  background: linear-gradient(135deg, #4a537c 0%, #0C1119 100%);
   display: flex;
   align-items: center;
   justify-content: center;

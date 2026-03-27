@@ -200,20 +200,21 @@ const Admin_dashboard = () => {
                   <table className='admin-table'>
                     <thead>
                       <tr>
-                        <th>ID</th>
+                        <th></th>
                         <th>Email</th>
                         <th>Location</th>
-                        <th>Description</th>
                         <th>Status</th>
+                        <th>Description</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {enquiries.map(e => (
-                        <tr key={e.id}>
-                          <td>{e.id}</td>
+                      {enquiries.map((e, index) => (
+                        
+                        <tr key={index}>
+                          <td>📃</td>
                           <td>{e.email}</td>
                           <td>{e.location}</td>
-                          <td>{e.description}</td>
+                          
                           <td>
                             <span
                               className='admin-status-badge'
@@ -222,6 +223,7 @@ const Admin_dashboard = () => {
                               {e.status}
                             </span>
                           </td>
+                          <td className='Description' >{e.description}</td>
                         </tr>
                       ))}
                     </tbody>
