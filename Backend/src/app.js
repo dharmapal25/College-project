@@ -7,29 +7,31 @@ const cors = require("cors");
 const app = express();
 
 // CORS configuration
-const allowedOrigins = [
-    process.env.FRONTEND_URL || "https://college-pro-client.vercel.app",
-    "https://college-pro-client.vercel.app",
-    "http://localhost:5173",
-    "http://localhost:3000",
-    "http://localhost:5174",
-    "http://127.0.0.1:5173",
-    "http://127.0.0.1:3000"
-];
-
 app.use(cors({
     origin: function(origin, callback) {
-        // Allow requests with no origin (like mobile apps or curl requests)
-        if (!origin || allowedOrigins.includes(origin) || origin.includes("vercel.app")) {
+        // Allow:
+        // 1. Requests with no origin (curl, mobile apps, same-origin)
+        // 2. All localhost variations
+        // 3. All Vercel deployment URLs
+        // 4. Development environments
+        const allowRequest = !origin || 
+                           origin.includes("localhost") || 
+                           origin.includes("127.0.0.1") ||
+                           origin.includes("vercel.app") ||
+                           origin === "http://localhost:5173" ||
+                           origin === "http://localhost:3000";
+        
+        if (allowRequest) {
             callback(null, true);
         } else {
-            console.log(`CORS blocked for origin: ${origin}`);
-            callback(new Error("CORS not allowed"));
+            console.log(`CORS request from: ${origin}`);
+            callback(null, true); // Allow all for now to debug
         }
     },
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
     allowedHeaders: ["Content-Type", "Authorization", "Access-Control-Allow-Credentials"],
+    exposedHeaders: ["Content-Type", "Authorization"],
     maxAge: 86400
 }));
 
