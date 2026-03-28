@@ -11,20 +11,26 @@ const allowedOrigins = [
     process.env.FRONTEND_URL || "https://college-pro-client.vercel.app",
     "https://college-pro-client.vercel.app",
     "http://localhost:5173",
-    "http://localhost:3000"
+    "http://localhost:3000",
+    "http://localhost:5174",
+    "http://127.0.0.1:5173",
+    "http://127.0.0.1:3000"
 ];
 
 app.use(cors({
     origin: function(origin, callback) {
-        if (!origin || allowedOrigins.includes(origin)) {
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if (!origin || allowedOrigins.includes(origin) || origin.includes("vercel.app")) {
             callback(null, true);
         } else {
+            console.log(`CORS blocked for origin: ${origin}`);
             callback(new Error("CORS not allowed"));
         }
     },
     credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"]
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
+    allowedHeaders: ["Content-Type", "Authorization", "Access-Control-Allow-Credentials"],
+    maxAge: 86400
 }));
 
 app.use(express.json());

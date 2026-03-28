@@ -5,10 +5,19 @@ import './Enquiry.css'
 
 const Enquiry = () => {
 
-  let readEmail = JSON.parse(localStorage.getItem("user"))
+  // Safely get user email from localStorage
+  const getUserEmail = () => {
+    try {
+      const user = JSON.parse(localStorage.getItem("user"));
+      return user?.email || '';
+    } catch (error) {
+      console.error("Error reading user data:", error);
+      return '';
+    }
+  };
 
   const [formData, setFormData] = useState({
-    email: `${readEmail.email}`,
+    email: getUserEmail(),
     location: '',
     category: '',        // ✅ add kiya
     description: '',
@@ -61,7 +70,7 @@ const Enquiry = () => {
       })
 
       
-      setFormData({ email: `${readEmail.email}`, location: '', category: '', description: '', emergency: false })
+      setFormData({ email: getUserEmail(), location: '', category: '', description: '', emergency: false })
 
     } catch (error) {
       setStatus({

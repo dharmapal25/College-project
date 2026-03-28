@@ -39,7 +39,8 @@ const Signup = () => {
         axios.post('https://college-pro.onrender.com/api/auth/register', formData, {
             headers: {
                 'Content-Type': 'application/json'
-            }
+            },
+            withCredentials: true
         })
             .then(response => {
                 console.log('Signup successful:', response.data)
