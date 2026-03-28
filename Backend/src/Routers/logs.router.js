@@ -5,7 +5,7 @@ const { getUserLogs, deleteLog, getUserAllLogs, getAllEnquiriesAdmin, getEnquiri
 
 router.get("/logs", authMiddleware, getUserLogs);
 router.get("/log-all", authMiddleware, getUserLogs, getUserAllLogs);
-router.get("/all-enquiries", authMiddleware, getAllEnquiriesAdmin);  // ✅ Any authenticated user can fetch all enquiries
+router.get("/all-enquiries", authMiddleware, getAllEnquiriesAdmin);  
 router.get("/category/:category", authMiddleware, getEnquiriesByCategory);  // Get enquiries by category
 router.put("/logs/:id/status", authMiddleware, updateEnquiryStatus);  // Update enquiry status
 router.delete("/logs/:id", authMiddleware, deleteLog);

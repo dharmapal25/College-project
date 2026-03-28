@@ -2,7 +2,7 @@ const userProblems = require("../models/userProblems.model");
 
 const getUserLogs = async (req, res) => {
   try {
-    // Get user email from authenticated user
+   
     const userEmail = req.user.email;
 
     if (!userEmail) {
@@ -91,12 +91,12 @@ const getUserAllLogs = async (req, res) => {
 
 const getAllEnquiriesAdmin = async (req, res) => {
   try {
-    // Admin route - fetch ALL enquiries without email filter
+   
     const logs = await userProblems
       .find({})
       .select("email category location description Emergency status createdAt")
       .sort({ createdAt: -1 })
-      .limit(500);  // Limit to 500 records for admin
+      .limit(500); 
 
     const formattedLogs = logs.map((item) => ({
       _id: item._id,
@@ -149,7 +149,7 @@ const deleteLog = async (req, res) => {
       });
     }
 
-    // Verify ownership - user can only delete their own logs
+   
     if (log.email.toLowerCase() !== userEmail.toLowerCase()) {
       return res.status(403).json({ 
         success: false,
@@ -184,7 +184,7 @@ const getEnquiriesByCategory = async (req, res) => {
       });
     }
 
-    // Fetch enquiries by category (case-insensitive)
+
     const logs = await userProblems
       .find({ category: { $regex: category, $options: "i" } })
       .select("email category location description Emergency status createdAt")
@@ -217,7 +217,7 @@ const getEnquiriesByCategory = async (req, res) => {
   }
 };
 
-// Update Enquiry Status
+
 const updateEnquiryStatus = async (req, res) => {
   try {
     const { id } = req.params;

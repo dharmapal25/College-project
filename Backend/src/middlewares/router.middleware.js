@@ -78,9 +78,9 @@ const adminMiddleware = async (req, res, next) => {
       token = req.cookies.adminToken;
     }
     // Try to get token from Authorization header
-    else if (req.headers.authorization) {
-      token = req.headers.authorization.replace("Bearer ", "");
-    }
+    // else if (req.headers.authorization) {
+    //   token = req.headers.authorization.replace("Bearer ", "");
+    // }
 
     if (!token) {
       return res.status(401).json({

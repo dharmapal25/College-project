@@ -5,7 +5,7 @@ const enquiry = async (req, res) => {
     const { email, location, description, category, Emergency } = req.body;
 
     try {
-        // Validation - Check all required fields
+        
         if (!email || !location || !description || !category) {
             return res.status(400).json({
                 success: false,
@@ -13,7 +13,7 @@ const enquiry = async (req, res) => {
             });
         }
 
-        // Validate email format
+       
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
             return res.status(400).json({
@@ -22,7 +22,7 @@ const enquiry = async (req, res) => {
             });
         }
 
-        // Verify user exists in MongoDB
+       
         const existingUser = await usersInfo.findOne({ email: email.toLowerCase() });
         if (!existingUser) {
             return res.status(404).json({
@@ -31,7 +31,7 @@ const enquiry = async (req, res) => {
             });
         }
 
-        // Check daily limit (max 3 enquiries per day)
+        
         const todayStart = new Date();
         todayStart.setHours(0, 0, 0, 0);
 

@@ -302,13 +302,13 @@ const officerLogin = async (req, res) => {
                 email: officer.email,
                 category: officer.category,
                 isOfficer: true,
-                isAdmin: isAdmin  // Add admin flag to token
+                isAdmin: isAdmin  
             },
             process.env.JWT_SECRET || "default_secret_key",
             { expiresIn: "7d" }
         );
 
-        // Set secure cookie
+        
         const isProduction = process.env.NODE_ENV === "production";
         res.cookie("officerToken", token, {
             httpOnly: true,
@@ -321,7 +321,7 @@ const officerLogin = async (req, res) => {
             success: true,
             message: "Officer login successful",
             token,
-            isAdmin: isAdmin,  // Send flag to frontend for redirect
+            isAdmin: isAdmin,  
             redirectTo: isAdmin ? "/admin-dashboard" : "/officers-dashboard",
             officer: {
                 id: officer._id,
@@ -344,7 +344,7 @@ const officerLogin = async (req, res) => {
 // Logout
 const logout = async (req, res) => {
     try {
-        // Clear all authentication cookies
+        
         res.clearCookie("token");
         res.clearCookie("adminToken");
         res.clearCookie("officerToken");

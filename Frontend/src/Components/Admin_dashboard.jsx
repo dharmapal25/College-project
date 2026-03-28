@@ -109,10 +109,10 @@ const Admin_dashboard = () => {
         image: ''
       });
 
-      // Reload officers
+      
       loadOfficers();
 
-      // Switch back to officers tab after 2 seconds
+      
       setTimeout(() => {
         setActiveTab('officers');
       }, 2000);
