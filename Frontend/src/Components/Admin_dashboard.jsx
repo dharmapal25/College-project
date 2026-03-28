@@ -14,7 +14,7 @@ const Admin_dashboard = () => {
     email: '',
     password: '',
     phone: '',
-    category: 'infrastructure',
+    category: 'Infrastructure & Public Works',
     image: ''
   });
   const [formStatus, setFormStatus] = useState({ message: '', type: '' });
@@ -105,7 +105,7 @@ const Admin_dashboard = () => {
         email: '',
         password: '',
         phone: '',
-        category: 'infrastructure',
+        category: 'Infrastructure & Public Works',
         image: ''
       });
 
@@ -295,14 +295,14 @@ const Admin_dashboard = () => {
                       required
                     >
                       <option value="">select category</option>
-                      <option value='infrastructure'>Infrastructure & Public Works</option>
-                      <option value='water'>Water & Sanitation</option>
-                      <option value='electricity'>Electricity & Power Supply</option>
-                      <option value='health'>Health & Public Safety</option>
-                      <option value='transportation'>Transportation & Traffic</option>
-                      <option value='education'>Education & Social Welfare</option>
-                      <option value='environment'>Environment & Pollution</option>
-                      <option value='other'>Other</option>
+                      <option value='Infrastructure & Public Works'>Infrastructure & Public Works</option>
+                      <option value='Water & Sanitation'>Water & Sanitation</option>
+                      <option value='Electricity & Power Supply'>Electricity & Power Supply</option>
+                      <option value='Health & Public Safety'>Health & Public Safety</option>
+                      <option value='Transportation & Traffic'>Transportation & Traffic</option>
+                      <option value='Education & Social Welfare'>Education & Social Welfare</option>
+                      <option value='Environment & Pollution'>Environment & Pollution</option>
+                      <option value='Other'>Other</option>
                     </select>
                   </div>
 
