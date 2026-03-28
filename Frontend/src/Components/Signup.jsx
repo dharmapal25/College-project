@@ -36,11 +36,14 @@ const Signup = () => {
             return
         }
 
+        console.log('Attempting signup with:', { username: formData.username, email: formData.email })
+
         axios.post('https://college-pro.onrender.com/api/auth/register', formData, {
             headers: {
                 'Content-Type': 'application/json'
             },
-            withCredentials: true
+            withCredentials: true,
+            timeout: 10000
         })
             .then(response => {
                 console.log('Signup successful:', response.data)
@@ -48,7 +51,13 @@ const Signup = () => {
                 navigate('/login', { replace: true })
             })
             .catch(error => {
-                console.error("Signup error:", error)
+                console.error("Signup error details:", {
+                    message: error.message,
+                    code: error.code,
+                    status: error.response?.status,
+                    data: error.response?.data,
+                    isNetworkError: error.message === 'Network Error'
+                })
                 const errorMsg = error.response?.data?.message || 'Signup failed. Please try again.'
                 setError(errorMsg)
             })

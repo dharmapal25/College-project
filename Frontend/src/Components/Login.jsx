@@ -39,7 +39,8 @@ const Login = () => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            withCredentials: true
+            withCredentials: true,
+            timeout: 10000
         })
             .then(response => {
                 console.log('Login successful:', response.data)
@@ -58,7 +59,13 @@ const Login = () => {
                 navigate('/dashboard', { replace: true })
             })
             .catch(error => {
-                console.error("Login error:", error)
+                console.error("Login error details:", {
+                    message: error.message,
+                    code: error.code,
+                    status: error.response?.status,
+                    data: error.response?.data,
+                    isNetworkError: error.message === 'Network Error'
+                })
                 const errorMsg = error.response?.data?.message || 'Login failed. Please try again.'
                 setError(errorMsg)
             })
