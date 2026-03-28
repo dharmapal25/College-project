@@ -7,6 +7,13 @@ const cors = require("cors");
 const app = express();
 
 // CORS configuration
+const allowedOrigins = [
+    process.env.FRONTEND_URL || "https://college-pro-client.vercel.app",
+    "https://college-pro-client.vercel.app",
+    "http://localhost:5173",
+    "http://localhost:3000"
+];
+
 app.use(cors({
     origin: function(origin, callback) {
         // Allow:
