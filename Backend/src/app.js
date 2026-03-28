@@ -8,7 +8,7 @@ const app = express();
 
 // CORS configuration
 const allowedOrigins = [
-    process.env.FRONTEND_URL || "https://citizen-sathi.vercel.app/",
+    process.env.FRONTEND_URL || "https://college-pro-client.vercel.app",
     "http://localhost:5173",
     "http://localhost:3000"
 ];
