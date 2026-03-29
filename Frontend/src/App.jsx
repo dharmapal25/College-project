@@ -12,7 +12,7 @@ import Enquiry from './Components/Enquiry'
 import Officers from './Components/Officers'
 import Logs from './Components/Logs'
 import NoInternet from './Components/NoInternet'
-
+import "./App.css"
 const App = () => {
   const [isOnline, setIsOnline] = useState(navigator.onLine)
 
